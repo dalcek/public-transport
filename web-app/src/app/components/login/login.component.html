@@ -1,0 +1,59 @@
+
+ <body>
+  <br><br><br>
+
+<div class="container">
+   <div class="row">
+     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+       <div class="card card-signin my-5">
+         <div class="card-body">
+           <h5 class="card-title text-center">LOG IN</h5>
+           <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="login()">
+             <div *ngIf="loginForm.controls.email.errors; else content" >
+               <div *ngIf="loginForm.controls.email.errors.required && (loginForm.controls.email.dirty || loginForm.controls.email.touched); else other_content">
+                   <div class="badge badge-danger">Email address is a mandatory field</div>
+               </div>
+               <ng-template #other_content>
+                 <div>
+                   <br>
+                 </div>
+               </ng-template>
+             </div>
+             <ng-template #content>
+                 <div>
+                   <br>
+                 </div>
+               </ng-template>
+             <div *ngIf="incorrectCredentials" >
+               <div class="form-label-group">
+                 <div class="badge badge-danger">Wrong email or password</div>
+               </div>
+             </div>
+             <div class="form-label-group">
+               <input type="email" name="email" class="form-control" placeholder="Email address" formControlName="email">
+
+               <div *ngIf="loginForm.controls.password.errors; else some_content" >
+                 <div *ngIf="loginForm.controls.password.errors.required && (loginForm.controls.password.dirty || loginForm.controls.password.touched); else empty_content">
+                     <div class="badge badge-danger">Password is a mandatory field</div>
+                 </div>
+                 <ng-template #empty_content>
+                     <div >
+                       <br>
+                     </div>
+                   </ng-template>
+               </div>
+               <ng-template #some_content>
+                 <div>
+                   <br>
+                 </div>
+               </ng-template>
+               <input type="password" name="email" class="form-control" placeholder="Enter Password"formControlName="password" required>
+             </div><br>
+             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Log in</button>
+           </form>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+</body>
