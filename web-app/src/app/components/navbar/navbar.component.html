@@ -7,13 +7,19 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/login">Log in</a>
+            <a class="nav-link" routerLink="/login" *ngIf="loggedIn==null">Log in</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/register">Register</a>
+            <a class="nav-link" routerLink="/register" *ngIf="loggedIn==null">Register</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  routerLink="/pricelist">Pricelist</a>
+            <a class="nav-link"  routerLink="/pricelist" *ngIf="loggedIn==null || loggedIn=='AppUser'">Pricelist</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  routerLink="/profile" *ngIf="loggedIn!=null">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login" (click)="logout()" *ngIf="loggedIn!=null">Log out</a>
           </li>
         </ul>
       </div>

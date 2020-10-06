@@ -1,6 +1,6 @@
 
  <body>
-  <br><br><br>
+  <br><br>
 
 <div class="container">
    <div class="row">
@@ -11,7 +11,7 @@
            <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="login()">
              <div *ngIf="loginForm.controls.email.errors; else content" >
                <div *ngIf="loginForm.controls.email.errors.required && (loginForm.controls.email.dirty || loginForm.controls.email.touched); else other_content">
-                   <div class="badge badge-danger">Email address is a mandatory field</div>
+                  <div class="badge badge-danger">Email is a required field</div>
                </div>
                <ng-template #other_content>
                  <div>
@@ -24,17 +24,22 @@
                    <br>
                  </div>
                </ng-template>
-             <div *ngIf="incorrectCredentials" >
+             <div *ngIf="this.errorMessage!=null; else br_content" >
                <div class="form-label-group">
-                 <div class="badge badge-danger">Wrong email or password</div>
+                 <div class="badge badge-danger">{{this.errorMessage}}</div>
                </div>
-             </div>
+              </div>
+                 <ng-template #br_content>
+                  <div>
+                    <br>
+                  </div>
+                </ng-template>
              <div class="form-label-group">
                <input type="email" name="email" class="form-control" placeholder="Email address" formControlName="email">
 
                <div *ngIf="loginForm.controls.password.errors; else some_content" >
                  <div *ngIf="loginForm.controls.password.errors.required && (loginForm.controls.password.dirty || loginForm.controls.password.touched); else empty_content">
-                     <div class="badge badge-danger">Password is a mandatory field</div>
+                     <div class="badge badge-danger">Password is a required field</div>
                  </div>
                  <ng-template #empty_content>
                      <div >

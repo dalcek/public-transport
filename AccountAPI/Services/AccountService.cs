@@ -9,7 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,9 @@ namespace AccountAPI.Services
       private readonly IConfiguration _configuration;
       private readonly IHttpContextAccessor _httpContextAccessor;
       private readonly IMapper _mapper;
+
+      public object HttpPostedFile { get; private set; }
+
       public AccountService(DataContext context, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IMapper mapper)
       {
          _context = context;
@@ -41,12 +46,12 @@ namespace AccountAPI.Services
          if (user == null)
          {
             response.Success = false;
-            response.Message = "Login failed.";
+            response.Message = "Incorrect credentials.";
          }
          else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
          {
             response.Success = false;
-            response.Message = "Login failed.";
+            response.Message = "Incorrect credentials.";
          }
          else
          {
@@ -75,7 +80,8 @@ namespace AccountAPI.Services
          response.Data = user.Id;
          return response;
       }
-      public async Task<ServiceResponse<GetUserDTO>> Update(AddUserDTO request)
+      //TODO: add mapping, don't forget to add a photo separately, you can remove photo from add user dto
+      public async Task<ServiceResponse<GetUserDTO>> Update(User request)
       {
          ServiceResponse<GetUserDTO> response = new ServiceResponse<GetUserDTO>();
          try
@@ -83,12 +89,22 @@ namespace AccountAPI.Services
             User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == GetUserId());
             if (user != null)
             {
+               // TODO: Password
                user.Email = request.Email;
                user.Name = request.Name;
                user.LastName = request.LastName;
                user.DateOfBirth = request.DateOfBirth;
-               user.Photo = request.Photo;
-               user.UserType = request.UserType;
+               if (user.UserType != request.UserType)
+               {
+                  if (request.UserType != Enums.UserType.RegularUser)
+                  {
+                     user.UserStatus = Enums.UserStatus.InProcess;
+                  }
+                  user.UserType = request.UserType;
+               }
+               // If changed, user photo will be sent in other request
+               //user.Photo = request.Photo;
+
                _context.Users.Update(user);
                await _context.SaveChangesAsync();
                response.Data = _mapper.Map<GetUserDTO>(user);
@@ -123,6 +139,77 @@ namespace AccountAPI.Services
             response.Success = false;
             response.Message = "Password not correct.";
          }
+         return response;
+      }
+
+      public async Task<ServiceResponse<GetUserDTO>> GetUser()
+      {
+         ServiceResponse<GetUserDTO> response = new ServiceResponse<GetUserDTO>();
+         try
+         {
+            User user = await _context.Users.FirstAsync(user => user.Id == GetUserId());
+            if (user == null) 
+            {
+               response.Success = false;
+               response.Message = "User not found.";
+            }
+            response.Data = _mapper.Map<GetUserDTO>(user);
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<string>> UploadImage(HttpRequest httpRequest)
+      {
+         ServiceResponse<string> response = new ServiceResponse<string>();
+
+         try
+         {
+            var userId = httpRequest.Form["id"];
+            int id = Int32.Parse(userId.FirstOrDefault());
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+            {
+               response.Success = false;
+               response.Message = "User not found.";
+               return response;
+            }
+
+            var file = httpRequest.Form.Files[0];
+            var folderName = Path.Combine("Resources", "Images");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+            if (file.Length > 0)
+            {
+               var fileExtension = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"').Split('.').Last();
+               var fileName = $"{id}.{fileExtension}";
+               var fullPath = Path.Combine(pathToSave, fileName);
+               var dbPath = Path.Combine(folderName, fileName);
+
+               using ( var stream = new FileStream(fullPath, FileMode.Create))
+               {
+                  file.CopyTo(stream);
+               }
+
+               user.Photo = dbPath;
+               // User needs to be validated again by controller
+               user.UserStatus = Enums.UserStatus.InProcess;
+               _context.Users.Update(user);
+               await _context.SaveChangesAsync();
+               response.Data = dbPath;
+            }
+         }
+         catch(Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         
          return response;
       }
       public async Task<bool> UserExists(string email)

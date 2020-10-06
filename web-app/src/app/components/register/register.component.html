@@ -1,0 +1,88 @@
+<body>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card card-signin flex-row my-5">
+          <div class="card-img-left d-none d-md-flex">
+             <!-- Background image for card set in CSS! <img  src="../../../favicon.ico"/> -->
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center">REGISTER</h5>
+            <br>
+            <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="register()">
+              <div *ngIf="this.errorMessage!=null; else empty_content" >
+                <div class="form-label-group">
+                  <div class="badge badge-danger">{{this.errorMessage}}</div>
+                </div>
+              </div>
+              <ng-template #empty_content>
+                <div class="form-label-group">
+                    <br>
+                  </div>
+            </ng-template>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-label-group">
+                        <input type="text" class="form-control" required placeholder="First name" formControlName="name">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-label-group">
+                        <input type="text" class="form-control" required placeholder="Last name" formControlName="lastName">
+                      </div>
+                </div>
+              </div>
+
+              <div class="form-label-group">
+                <input type="email" class="form-control" required placeholder="Email address" formControlName="email">
+              </div>
+
+              <div class="form-label-group">
+                  <input type="password" id="inputPassword" class="form-control" formControlName="password" placeholder="Password" required>
+                </div>
+
+                <div class="form-label-group">
+                  <input type="password" id="inputConfirmPassword" class="form-control" formControlName="confirmPassword" placeholder="Confirm password" required>
+                </div>
+
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-label-group" id="date">
+                          <input type="date" class="form-control" required placeholder="Date of birth" formControlName="dateOfBirth">
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <select class="select" id="selectLabel" formControlName="userType" required (change)="onSelect($event)">
+                          <option value="RegularUser">Regular user</option>
+                          <option value="Student">Student</option>
+                          <option value="Retired">Retired</option>
+                        </select>
+                  </div>
+              </div>
+
+
+              <div *ngIf="this.registerForm.controls.userType.value=='Student' || this.registerForm.controls.userType.value=='Retired'; else other_content">
+                  <div class="form-label-group">
+                    <div class="custom-file">
+                      <input name="photo" type="file" accept="image/*"  class="custom-file-input" (change)="onImageChange($event)" formControlName="photo">
+                      <label class="custom-file-label">{{this.photoMessage}}</label>
+                    </div>
+                  </div>
+                </div>
+                <ng-template #other_content>
+                    <div class="form-label-group">
+                        <div class="custom-file">
+                          <br>
+                        </div>
+                      </div>
+                </ng-template>
+                <br>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

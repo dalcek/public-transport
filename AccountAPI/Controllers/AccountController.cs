@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AccountAPI.Models;
 using AccountAPI.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountAPI.Controllers
@@ -24,7 +27,7 @@ namespace AccountAPI.Controllers
       }
 
       [AllowAnonymous]
-      [HttpPost("Register")]
+      [HttpPost("register")]
       public async Task<IActionResult> Register(AddUserDTO request)
       {
          User temp = _mapper.Map<User>(request);
@@ -52,11 +55,23 @@ namespace AccountAPI.Controllers
          return Ok(response);
       }
 
+      [HttpGet]
+      public async Task<IActionResult> GetUser()
+      {
+         ServiceResponse<GetUserDTO> response = await _accountService.GetUser();
+         if (!response.Success)
+         {
+               return BadRequest(response);
+         }
+         return Ok(response);
+      }
+
       [HttpPut("update")]
       public async Task<IActionResult> Update(AddUserDTO request)
       {
-         ServiceResponse<GetUserDTO> response = await _accountService.Update(request);
-         if (response == null)
+         User user = _mapper.Map<User>(request);
+         ServiceResponse<GetUserDTO> response = await _accountService.Update(user);
+         if (!response.Success)
          {
             return NotFound(response);
          }
@@ -68,10 +83,24 @@ namespace AccountAPI.Controllers
       {
          ServiceResponse<string> response = await _accountService.Delete(request.Password);
 
-         if (response == null)
+         if (!response.Success)
          {
             return NotFound(response);
          }
+         return Ok(response);
+      }
+
+      [HttpPost("uploadImage"), DisableRequestSizeLimit]
+      public async Task<IActionResult> UploadImage()
+      {
+         var httpRequest = Request;
+         ServiceResponse<string> response = await _accountService.UploadImage(Request);
+
+         if (!response.Success)
+         {
+            return BadRequest();
+         }
+
          return Ok(response);
       }
    }

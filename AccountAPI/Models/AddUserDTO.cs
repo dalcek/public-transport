@@ -12,8 +12,12 @@ namespace AccountAPI.Models
         public string Password { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        //public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
+
         public string Photo { get; set; }
-        public UserType UserType { get; set; }
+        public string UserType { get; set; }
+        //public int UserType { get; set; }
+
     }
 }
