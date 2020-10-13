@@ -1,10 +1,32 @@
 version: '3'
 services:
-  db:
+  #ticketdb:
+    #image: mcr.microsoft.com/mssql/server:2017-latest
+    #container_name: ticketdb
+    #environment:
+      #ACCEPT_EULA: "Y"
+      #SA_PASSWORD: "NikolinPassword9!"
+    #ports:
+      #- "1434:1433"
+  accountdb:
     image: mcr.microsoft.com/mssql/server:2017-latest
-    container_name: accountsqlserver
+    container_name: accountdb
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "NikolinPassword9!"
+      SA_PASSWORD: "NikolinAccount9!"
     ports:
       - "1433:1433"
+  #ticket:
+    #build:
+      #dockerfile: Dockerfile
+      #context: ./TicketAPI
+    #ports:
+      #- 6002:80
+  account:
+    build:
+      dockerfile: Dockerfile
+      context: ./AccountAPI
+    ports:
+      - 6001:80
+    depends_on:
+      - accountdb

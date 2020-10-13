@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { AddUserDTO, LoginUserDTO, ServiceResponse } from '../models/models';
+import { AddUserDTO, LoginUserDTO, ServiceResponse } from '../../models/models';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 
@@ -10,7 +10,7 @@ import { of } from 'rxjs/internal/observable/of';
 })
 export class AccountService {
 
-  baseUrl = 'http://localhost:5000';
+  baseUrl = 'http://localhost:6001';
 
 
   constructor(private http: HttpClient) { }

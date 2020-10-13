@@ -2,7 +2,7 @@ import { WrappedNodeExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddUserDTO, LoginUserDTO } from 'src/app/models/models';
-import { AccountService } from 'src/app/services/account.service';
+import { AccountService } from 'src/app/services/account/account.service';
 
 @Component({
   selector: 'app-register',

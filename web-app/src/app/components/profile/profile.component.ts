@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AddUserDTO, GetUserDTO } from 'src/app/models/models';
-import { AccountService } from 'src/app/services/account.service';
+import { AccountService } from 'src/app/services/account/account.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
     dateOfBirth: ['', Validators.required],
     userType: ['', Validators.required],
     userStatus: ['', {disabled: true}],
-    photo: [''],
+    photo: ['']
   });//, {validator: this.checkPassword});
 
   //user: GetUserDTO = new GetUserDTO();
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
             this.accountService.uploadImage(formData).subscribe(
               result => {
                 console.log(result.data);
-                this.photoPath = `http://localhost:5000/${result.data}`;
+                this.photoPath = `http://localhost:6001/${result.data}`;
                 this.photoChanged = false;
                 this.photoFile = null;
                 location.reload();
@@ -106,8 +106,13 @@ export class ProfileComponent implements OnInit {
       this.profileForm.controls.email.setValue(user.email);
     }
     if (user.dateOfBirth) {
-      let fullDate = user.dateOfBirth.split(' ')[0];
-      let formattedDate = `${fullDate.split('.')[2]}-${fullDate.split('.')[1]}-${fullDate.split('.')[0]}`;
+      console.log(user.dateOfBirth)
+      //let fullDate = user.dateOfBirth.split(' ')[0];
+      //let formattedDate = `${fullDate.split('/')[2]}-${fullDate.split('/')[1]}-${fullDate.split('/')[0]}`;
+      let fullDate = user.dateOfBirth.split(' ')[0].split('/');
+      let formattedDate = `${fullDate[2]}-${fullDate[0]}-${fullDate[1]}`;
+      console.log(formattedDate)
+
       this.profileForm.controls.dateOfBirth.setValue(formattedDate);
     }
     if (user.userType) {
