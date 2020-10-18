@@ -15,6 +15,7 @@ namespace AccountAPI.Services
         Task<ServiceResponse<GetUserDTO>> Update(User user);
         Task<ServiceResponse<string>> UploadImage(HttpRequest httpContext);
         Task<ServiceResponse<GetUserDTO>> GetUser();
+        ServiceResponse<Enums.UserType> GetUserType(int id);
         Task<bool> UserExists(string email);
     }
 }

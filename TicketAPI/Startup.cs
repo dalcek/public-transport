@@ -15,7 +15,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using RabbitMQ;
+using RabbitMQ.Client;
 using TicketAPI.Data;
+using TicketAPI.RabbitMQClient;
 using TicketAPI.Services;
 
 namespace TicketAPI
@@ -47,7 +50,22 @@ namespace TicketAPI
                     ValidateAudience = false
                 };
             });
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+         services.AddSingleton<RabbitMQ.IRabbitMQConnection>(sp =>
+         {
+            var factory = new ConnectionFactory()
+            {
+               //HostName = Configuration["EventBus:HostName"]
+               HostName = "rabbitmq"
+               //UserName = "user",
+               //Password = "password",
+               //VirtualHost = "/",
+               // HostName = "192.168.0.14",
+               //Port = AmqpTcpEndpoint.UseDefaultPort
+            };
+            return new RabbitMQConnection(factory);
+         });
+         services.AddSingleton<RpcClient>();
       }
 
       // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

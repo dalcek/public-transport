@@ -39,6 +39,35 @@ namespace AccountAPI.Services
       private string GetUserEmail() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
       private string GetUserRole() => _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
 
+      public ServiceResponse<Enums.UserType> GetUserType(int id)
+      {
+         ServiceResponse<Enums.UserType> response = new ServiceResponse<Enums.UserType>();
+         try
+         {
+            User user = _context.Users.FirstOrDefault(u => u.Id == id);
+            Console.WriteLine("SERVIS" + user.UserType);
+            Console.WriteLine("NAME" + user.Name);
+
+            if (user != null)
+            {
+               response.Data = user.UserStatus == Enums.UserStatus.Accepted ? user.UserType : Enums.UserType.RegularUser;
+            }
+            else
+            {
+               response.Success = false;
+               response.Message = "User with the given id is not found.";
+            }
+         }
+         catch (Exception)
+         {
+            response.Success = false;
+            response.Message = "User with the given id is not found.";
+         }
+         Console.WriteLine("SERVICE RESPOSNE" + response.Data);
+         Console.WriteLine("SERVICE MESIDZ" + response.Message);
+
+         return response;
+      }
       public async Task<ServiceResponse<string>> Login(string email, string password)
       {
          ServiceResponse<string> response = new ServiceResponse<string>();

@@ -1,13 +1,11 @@
 version: '3'
 services:
-  #ticketdb:
-    #image: mcr.microsoft.com/mssql/server:2017-latest
-    #container_name: ticketdb
-    #environment:
-      #ACCEPT_EULA: "Y"
-      #SA_PASSWORD: "NikolinPassword9!"
-    #ports:
-      #- "1434:1433"
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
   accountdb:
     image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: accountdb
@@ -16,13 +14,20 @@ services:
       SA_PASSWORD: "NikolinAccount9!"
     ports:
       - "1433:1433"
-  #ticket:
-    #build:
-      #dockerfile: Dockerfile
-      #context: ./TicketAPI
-    #ports:
-      #- 6002:80
+    depends_on: 
+      - rabbitmq
+  ticketdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: ticketdb
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "NikolinPassword9!"
+    ports:
+      - "1434:1433"
+    depends_on: 
+      - rabbitmq
   account:
+    container_name: account
     build:
       dockerfile: Dockerfile
       context: ./AccountAPI
@@ -30,3 +35,12 @@ services:
       - 6001:80
     depends_on:
       - accountdb
+  ticket:
+    container_name: ticket
+    build:
+      dockerfile: Dockerfile
+      context: ./TicketAPI
+    ports:
+      - 6002:80
+    depends_on: 
+      - ticketdb

@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PricelistComponent } from './components/pricelist/pricelist.component';
+import { BuyATicketComponent } from './components/buy-a-ticket/buy-a-ticket.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [
@@ -19,14 +21,16 @@ import { PricelistComponent } from './components/pricelist/pricelist.component';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    PricelistComponent
+    PricelistComponent,
+    BuyATicketComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPayPalModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

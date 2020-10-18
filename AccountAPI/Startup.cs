@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AccountAPI.Data;
+using AccountAPI.RabbitMQServer;
 using AccountAPI.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,6 +22,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using RabbitMQ;
+using RabbitMQ.Client;
 
 namespace AccountAPI
 {
@@ -60,6 +63,23 @@ namespace AccountAPI
                o.MultipartBodyLengthLimit = int.MaxValue;
                o.MemoryBufferThreshold = int.MaxValue;
             });
+            
+            services.AddSingleton<IRabbitMQConnection>(sp =>
+            {
+               var factory = new ConnectionFactory()
+               {
+                  //HostName = Configuration["EventBus:HostName"]
+                  HostName = "rabbitmq"
+                  //UserName = "user",
+                  //Password = "password",
+                  //VirtualHost = "/",
+                  // HostName = "192.168.0.14",
+                  //Port = AmqpTcpEndpoint.UseDefaultPort
+               };
+               return new RabbitMQConnection(factory);
+            });
+
+            services.AddSingleton<RpcServer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +113,8 @@ namespace AccountAPI
             });
 
             Data.Utility.UpdateDatabase(app);
+            //Initilize Rabbit Listener in ApplicationBuilderExtentions
+            app.UseRabbitListener();
         }
     }
 }

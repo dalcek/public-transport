@@ -67,6 +67,25 @@ namespace AccountAPI.Data
                     LastName = "Doe",
                     DateOfBirth = new DateTime(1996, 9, 3),
                     UserStatus = Enums.UserStatus.Accepted,
+                    UserType = Enums.UserType.RegularUser,
+                    Role = "AppUser",
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt
+                }
+            );
+
+            Utility.CreatePasswordHash("Nikola123!", out passwordHash, out passwordSalt);
+
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 4,
+                    Email = "nikola@gmail.com",
+                    Name = "Nikola",
+                    LastName = "Dragas",
+                    DateOfBirth = new DateTime(1996, 9, 3),
+                    UserStatus = Enums.UserStatus.Accepted,
+                    UserType = Enums.UserType.Student,
                     Role = "AppUser",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt

@@ -37,6 +37,16 @@ export class GetUserDTO {
   UserStatus: string;
 }
 
+export class CreateTicketDTO {
+  TicketType: string;
+  Email: string;
+
+  constructor (ticketType: string, email: string) {
+    this.TicketType = ticketType;
+    this.Email = email;
+  }
+}
+
 export class ServiceResponse<T> {
   Data: T;
   Success: Boolean;
