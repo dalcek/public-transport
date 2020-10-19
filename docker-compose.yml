@@ -26,6 +26,14 @@ services:
       - "1434:1433"
     depends_on: 
       - rabbitmq
+  paymentdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: paymentdb
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "NikolinPayment9!"
+    ports:
+      - "1435:1433"
   account:
     container_name: account
     build:
@@ -44,3 +52,12 @@ services:
       - 6002:80
     depends_on: 
       - ticketdb
+  payment:
+    container_name: payment
+    build:
+      dockerfile: Dockerfile
+      context: ./PaymentAPI
+    ports:
+      - 6003:80
+    depends_on: 
+      - paymentdb

@@ -30,8 +30,6 @@ namespace AccountAPI.Controllers
       [HttpPost("register")]
       public async Task<IActionResult> Register(AddUserDTO request)
       {
-         User temp = _mapper.Map<User>(request);
-         
          ServiceResponse<int> response = await _accountService.Register(
             _mapper.Map<User>(request), request.Password
          );

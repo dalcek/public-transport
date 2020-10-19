@@ -47,6 +47,20 @@ export class CreateTicketDTO {
   }
 }
 
+export class PaymentDTO {
+  TransactionId: string;
+  PayerId: string;
+  PayerEmail: string;
+  TicketId: number;
+
+  constructor (transactionId: string, payerId: string, payerEmail: string, ticketId: number) {
+    this.TransactionId = transactionId;
+    this.PayerId = payerId;
+    this.PayerEmail = payerEmail;
+    this.TicketId = ticketId;
+  }
+}
+
 export class ServiceResponse<T> {
   Data: T;
   Success: Boolean;

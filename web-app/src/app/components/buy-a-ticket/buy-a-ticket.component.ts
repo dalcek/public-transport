@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
-import { CreateTicketDTO } from 'src/app/models/models';
+import { CreateTicketDTO, PaymentDTO } from 'src/app/models/models';
+import { PaymentService } from 'src/app/services/payment/payment.service';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 
 @Component({
@@ -17,14 +18,12 @@ export class BuyATicketComponent implements OnInit {
   loggedIn: any = localStorage['role'];
 
   ticketId: number = -1;
-  ticketPrice: number = -1;
-
 
   emailForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     ticketType: ['HourTicket']
   });
-  constructor(private formBuilder: FormBuilder, private ticketService: TicketService) { }
+  constructor(private formBuilder: FormBuilder, private ticketService: TicketService, private paymentService: PaymentService) { }
 
   ngOnInit(): void {
     if (this.loggedIn)
@@ -107,10 +106,15 @@ export class BuyATicketComponent implements OnInit {
       this.ticketService.createTicket(new CreateTicketDTO(this.emailForm.controls.ticketType.value, this.emailForm.controls.email.value)).subscribe(
         result => {
           window.alert(`Succesfully purchased a ticket. Id: ${result.data.id}`);
+          this.ticketId = result.data.id;
         },
         err => {
           console.log(err.error.message);
           window.alert(err.error.message);
+          this.ticketId = -1;
+        },
+        () => {
+          this.paymentService.addPayment(new PaymentDTO(data.id, data.payer.payer_id, data.payer.email_address, this.ticketId)).subscribe(res => console.log(res));
         }
       );
     },
