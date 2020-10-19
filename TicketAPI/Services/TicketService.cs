@@ -32,7 +32,7 @@ namespace TicketAPI.Services
          return -1;
       }
 
-      public async Task<ServiceResponse<AddedTicketDTO>> CreateTicket(string ticketType, int ticketPrice)
+      public async Task<ServiceResponse<AddedTicketDTO>> CreateTicket(string ticketType, int ticketPrice, string email)
       {
          ServiceResponse<AddedTicketDTO> response = new ServiceResponse<AddedTicketDTO>();
          Enums.TicketType type = (Enums.TicketType) Enum.Parse(typeof(Enums.TicketType), ticketType);
@@ -54,6 +54,7 @@ namespace TicketAPI.Services
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
             response.Data = new AddedTicketDTO(){ Id = ticket.Id, Price = ticket.Price};
+            Utility.SendEmail(email, "Ticket purchase confirmation", "You have successfully purchased a ticket. Ticket id: " + ticket.Id);
          }
          catch (Exception e)
          {
@@ -122,7 +123,6 @@ namespace TicketAPI.Services
                rpcResponse = System.Text.Json.JsonSerializer.Deserialize<ServiceResponse<int>>(res);
                if (rpcResponse.Success)
                {
-                  Console.WriteLine("DATA: " + rpcResponse.Data);
                   userType = (Enums.UserType) rpcResponse.Data;
                }
             }

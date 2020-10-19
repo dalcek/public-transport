@@ -92,7 +92,7 @@ namespace AccountAPI
             // TODO: Write your own CORS policies, more at https://stackoverflow.com/questions/56328474/origin-http-localhost4200-has-been-blocked-by-cors-policy-in-angular7
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-            Directory.CreateDirectory("/app/Resources");
+            Directory.CreateDirectory("/app/Resources/Images");
             app.UseStaticFiles(new StaticFileOptions 
             {
                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),

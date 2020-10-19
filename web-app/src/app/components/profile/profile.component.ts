@@ -84,6 +84,14 @@ export class ProfileComponent implements OnInit {
     //this.selectValue = event.target.value;
   }
 
+  changePassword() {
+
+  }
+
+  deleteProfile() {
+
+  }
+
   getUser() {
     this.accountService.getUser().subscribe(
       result => {
@@ -106,12 +114,8 @@ export class ProfileComponent implements OnInit {
       this.profileForm.controls.email.setValue(user.email);
     }
     if (user.dateOfBirth) {
-      console.log(user.dateOfBirth)
-      //let fullDate = user.dateOfBirth.split(' ')[0];
-      //let formattedDate = `${fullDate.split('/')[2]}-${fullDate.split('/')[1]}-${fullDate.split('/')[0]}`;
       let fullDate = user.dateOfBirth.split(' ')[0].split('/');
       let formattedDate = `${fullDate[2]}-${fullDate[0]}-${fullDate[1]}`;
-      console.log(formattedDate)
 
       this.profileForm.controls.dateOfBirth.setValue(formattedDate);
     }
@@ -119,7 +123,7 @@ export class ProfileComponent implements OnInit {
       this.profileForm.controls.userType.setValue(user.userType);
     }
     if (user.photo) {
-      this.photoPath = `http://localhost:5000/${user.photo}`;
+      this.photoPath = `http://localhost:6001/${user.photo}`;
     }
     if (user.userStatus) {
       if (user.userStatus == "InProcess") {

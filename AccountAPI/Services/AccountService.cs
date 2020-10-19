@@ -45,9 +45,6 @@ namespace AccountAPI.Services
          try
          {
             User user = _context.Users.FirstOrDefault(u => u.Id == id);
-            Console.WriteLine("SERVIS" + user.UserType);
-            Console.WriteLine("NAME" + user.Name);
-
             if (user != null)
             {
                response.Data = user.UserStatus == Enums.UserStatus.Accepted ? user.UserType : Enums.UserType.RegularUser;
@@ -63,9 +60,6 @@ namespace AccountAPI.Services
             response.Success = false;
             response.Message = "User with the given id is not found.";
          }
-         Console.WriteLine("SERVICE RESPOSNE" + response.Data);
-         Console.WriteLine("SERVICE MESIDZ" + response.Message);
-
          return response;
       }
       public async Task<ServiceResponse<string>> Login(string email, string password)
@@ -208,7 +202,6 @@ namespace AccountAPI.Services
                response.Message = "User not found.";
                return response;
             }
-
             var file = httpRequest.Form.Files[0];
             var folderName = Path.Combine("Resources", "Images");
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);

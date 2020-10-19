@@ -96,13 +96,13 @@ export class BuyATicketComponent implements OnInit {
       },
 
     onApprove: (data, actions) => {
-      console.log('onApprove - transaction was approved, but not authorized', data, actions);
+      //console.log('onApprove - transaction was approved, but not authorized', data, actions);
       actions.order.get().then(details => {
-        console.log('onApprove - you can get full order details inside onApprove: ', details);
+        //console.log('onApprove - you can get full order details inside onApprove: ', details);
       });
     },
     onClientAuthorization: (data) => {
-      console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+      //console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
       this.ticketService.createTicket(new CreateTicketDTO(this.emailForm.controls.ticketType.value, this.emailForm.controls.email.value)).subscribe(
         result => {
           window.alert(`Succesfully purchased a ticket. Id: ${result.data.id}`);
@@ -119,13 +119,13 @@ export class BuyATicketComponent implements OnInit {
       );
     },
     onCancel: (data, actions) => {
-      console.log('OnCancel', data, actions);
+      //console.log('OnCancel', data, actions);
     },
     onError: err => {
-      console.log('OnError', err);
+      //console.log('OnError', err);
     },
     onClick: (data, actions) => {
-      console.log('onClick', data, actions);
+      //console.log('onClick', data, actions);
     },
   };
   }

@@ -40,7 +40,7 @@ namespace TicketAPI.Controllers
             response.Success = price.Success;
             return BadRequest(response);
          }
-         response = await _ticketService.CreateTicket(data.TicketType, price.Data);
+         response = await _ticketService.CreateTicket(data.TicketType, price.Data, data.Email);
          if (!response.Success)
          {
             return BadRequest(response);

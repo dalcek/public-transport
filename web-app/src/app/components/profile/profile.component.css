@@ -90,6 +90,18 @@ body {
   color: #CBD0D8;
 }
 
+#deleteButton {
+  font-size: 80%;
+  border-radius: 0.5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+  background: #E2495B;
+  border-color: #E2495B;
+  color: #ffffff;
+}
+
 .form-label-group {
   position: relative;
   margin-bottom: 1rem;

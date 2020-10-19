@@ -48,18 +48,18 @@ namespace TicketAPI.RabbitMQClient
          var messageBytes = Encoding.UTF8.GetBytes(message);
          var tcs = new TaskCompletionSource<string>();
          callbackMapper.TryAdd(correlationId, tcs);
-         Console.WriteLine("Pre publish");
+         
          channel.BasicPublish(
             exchange: "",
             routingKey: QUEUE_NAME,
             basicProperties: props,
             body: messageBytes);
-         Console.WriteLine("pre consume");
+         
          channel.BasicConsume(
             consumer: consumer,
             queue: replyQueueName,
             autoAck: true);
-         Console.WriteLine("post consume");
+         
          cancellationToken.Register(() => callbackMapper.TryRemove(correlationId, out var tmp));
          return tcs.Task;
       }

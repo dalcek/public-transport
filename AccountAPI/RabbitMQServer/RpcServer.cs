@@ -40,20 +40,14 @@ namespace AccountAPI.RabbitMQServer
             try
             {
                var message = Encoding.UTF8.GetString(body);
-               int n = int.Parse(message);
-               Console.WriteLine("Request on server: ");
-               Console.Write(message);
-               Console.WriteLine("posle poruke");
+               int id = int.Parse(message);
 
-               ServiceResponse<Enums.UserType> res = _accountService.GetUserType(n);
+               ServiceResponse<Enums.UserType> res = _accountService.GetUserType(id);
                response = JsonSerializer.Serialize(res);
-               Console.WriteLine("response on server");
-               Console.WriteLine(response);
-               //response = n.ToString();
             }
             catch (Exception e)
             {
-               Console.WriteLine(" [.] " + e.Message);
+               Console.WriteLine("Error at RPC Server: " + e.Message);
                response = "";
             }
             finally

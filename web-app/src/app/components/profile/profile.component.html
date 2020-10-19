@@ -28,26 +28,21 @@
                       </div>
                 </div>
               </div>
-
               <div class="form-label-group">
                 <input type="email" class="form-control" required placeholder="Email address" formControlName="email">
               </div>
-
-
-
               <div class="row">
                   <div class="col-md-6">
                       <div class="form-label-group" id="date">
-                          <input type="date" class="form-control" required placeholder="Date of birth" formControlName="dateOfBirth">
+                        <input type="date" class="form-control" required placeholder="Date of birth" formControlName="dateOfBirth">
                       </div>
                   </div>
                   <div class="col-md-6">
-
                       <select class="select" id="selectLabel" formControlName="userType" required (change)="onSelect($event)">
-                          <option value="RegularUser">Regular user</option>
-                          <option value="Student">Student</option>
-                          <option value="Retired">Retired</option>
-                        </select>
+                        <option value="RegularUser">Regular user</option>
+                        <option value="Student">Student</option>
+                        <option value="Retired">Retired</option>
+                      </select>
                   </div>
               </div>
               <div class="row">
@@ -55,27 +50,36 @@
                   <div class="form-label-group">
                       <input type="text" class="form-control" required placeholder="User status: " formControlName="userStatus">
                   </div>
-              </div>
-              <div class="col-md-6">
-                <div *ngIf="this.profileForm.controls.userType.value == 'Student' || this.profileForm.controls.userType.value == 'Retired'; else other_content">
+                </div>
+                <div class="col-md-6">
+                  <div *ngIf="this.profileForm.controls.userType.value == 'Student' || this.profileForm.controls.userType.value == 'Retired'; else other_content">
                     <div class="form-label-group">
-                        <input name="photo" type="file" accept="image/*" id="file" class="custom-file-input" (change)="onImageChange($event)" formControlName="photo">
-                        <label class="custom-file-label">{{this.photoMessage}}</label>
+                      <input name="photo" type="file" accept="image/*" id="file" class="custom-file-input" (change)="onImageChange($event)" formControlName="photo">
+                      <label class="custom-file-label">{{this.photoMessage}}</label>
                     </div>
                   </div>
                   <ng-template #other_content>
-                      <div class="form-label-group">
-                          <div class="custom-file">
-                            <br>
-                          </div>
-                        </div>
+                    <div class="form-label-group">
+                      <div class="custom-file">
+                        <br>
+                      </div>
+                    </div>
                   </ng-template>
-
+                </div>
               </div>
-
-            </div>
-
-                <br>
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-label-group">
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="changePassword()">Change password</button>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-label-group">
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase" id="deleteButton" (click)="deleteProfile()">Delete profile</button>
+                  </div>
+                </div>
+              </div>
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">save</button>
             </form>
           </div>

@@ -96,7 +96,7 @@ namespace AccountAPI.Controllers
 
          if (!response.Success)
          {
-            return BadRequest();
+            return BadRequest(response);
          }
 
          return Ok(response);
