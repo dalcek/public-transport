@@ -161,5 +161,120 @@ namespace TicketAPI.Services
          }
          return response;
       }
+
+      public async Task<ServiceResponse<PricelistDTO>> CreatePricelist(PricelistDTO pricelist)
+      {
+         ServiceResponse<PricelistDTO> response = new ServiceResponse<PricelistDTO>();
+         try
+         {
+            Pricelist old = await _context.Pricelists.FirstOrDefaultAsync(p => p.Active);
+            old.Active = false;
+            _context.Pricelists.Update(old);
+            Pricelist newPricelist = new Pricelist { From = DateTime.Now, To = Convert.ToDateTime(pricelist.To), Active = true };
+            await _context.Pricelists.AddAsync(newPricelist);
+            await _context.SaveChangesAsync();
+
+            Item hour = await _context.Items.FirstOrDefaultAsync(i => i.TicketType == Enums.TicketType.HourTicket);
+            Item day = await _context.Items.FirstOrDefaultAsync(i => i.TicketType == Enums.TicketType.DayTicket);
+            Item month = await _context.Items.FirstOrDefaultAsync(i => i.TicketType == Enums.TicketType.MonthTicket);
+            Item year = await _context.Items.FirstOrDefaultAsync(i => i.TicketType == Enums.TicketType.YearTicket);
+
+            await _context.PricelistItems.AddAsync(new PricelistItem { Price = pricelist.HourPrice, PricelistId = newPricelist.Id, ItemId = hour.Id });
+            await _context.PricelistItems.AddAsync(new PricelistItem { Price = pricelist.DayPrice, PricelistId = newPricelist.Id, ItemId = day.Id });
+            await _context.PricelistItems.AddAsync(new PricelistItem { Price = pricelist.MonthPrice, PricelistId = newPricelist.Id, ItemId = month.Id });
+            await _context.PricelistItems.AddAsync(new PricelistItem { Price = pricelist.YearPrice, PricelistId = newPricelist.Id, ItemId = year.Id });
+
+            await _context.SaveChangesAsync();
+            response.Data = pricelist;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+
+         return response;
+      }
+
+      public async Task<ServiceResponse<PricelistDTO>> UpdatePricelist(PricelistDTO pricelist)
+      {
+         ServiceResponse<PricelistDTO> response = new ServiceResponse<PricelistDTO>();
+         PricelistItem pricelistItem;
+         try
+         {
+            Pricelist pl = await _context.Pricelists.FirstOrDefaultAsync(p => p.Active == true);
+            pl.From = Convert.ToDateTime(pricelist.From);
+            pl.To = Convert.ToDateTime(pricelist.To);
+            _context.Pricelists.Update(pl);
+
+            pricelistItem = await _context.PricelistItems.FirstOrDefaultAsync(pi => pi.PricelistId == pl.Id 
+               && pi.Item.TicketType == Enums.TicketType.HourTicket);
+            pricelistItem.Price = pricelist.HourPrice;
+            _context.PricelistItems.Update(pricelistItem);
+
+            pricelistItem = await _context.PricelistItems.FirstOrDefaultAsync(pi => pi.PricelistId == pl.Id 
+               && pi.Item.TicketType == Enums.TicketType.DayTicket);
+            pricelistItem.Price = pricelist.DayPrice;
+            _context.PricelistItems.Update(pricelistItem);
+
+            pricelistItem = await _context.PricelistItems.FirstOrDefaultAsync(pi => pi.PricelistId == pl.Id 
+               && pi.Item.TicketType == Enums.TicketType.MonthTicket);
+            pricelistItem.Price = pricelist.MonthPrice;
+            _context.PricelistItems.Update(pricelistItem);
+
+            pricelistItem = await _context.PricelistItems.FirstOrDefaultAsync(pi => pi.PricelistId == pl.Id 
+               && pi.Item.TicketType == Enums.TicketType.YearTicket);
+            pricelistItem.Price = pricelist.YearPrice;
+            _context.PricelistItems.Update(pricelistItem);
+            await _context.SaveChangesAsync();
+
+            response.Data = pricelist;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<PricelistDTO>> GetPricelist()
+      {
+         ServiceResponse<PricelistDTO> response = new ServiceResponse<PricelistDTO>();
+         PricelistDTO temp = new PricelistDTO();
+         PricelistItem pricelistItem;
+         try
+         {
+            Pricelist pricelist = await _context.Pricelists.FirstOrDefaultAsync(p => p.Active == true);
+            
+            temp.From = pricelist.From.ToString();
+            temp.To = pricelist.To.ToString();
+            
+            pricelistItem = await _context.PricelistItems.FirstOrDefaultAsync(pi => pi.PricelistId == pricelist.Id 
+               && pi.Item.TicketType == Enums.TicketType.HourTicket);
+            temp.HourPrice = (int) pricelistItem.Price;
+
+            pricelistItem = await _context.PricelistItems.FirstOrDefaultAsync(pi => pi.PricelistId == pricelist.Id 
+               && pi.Item.TicketType == Enums.TicketType.DayTicket);
+            temp.DayPrice = (int) pricelistItem.Price;
+
+            pricelistItem = await _context.PricelistItems.FirstOrDefaultAsync(pi => pi.PricelistId == pricelist.Id 
+               && pi.Item.TicketType == Enums.TicketType.MonthTicket);
+            temp.MonthPrice = (int) pricelistItem.Price;
+
+            pricelistItem = await _context.PricelistItems.FirstOrDefaultAsync(pi => pi.PricelistId == pricelist.Id 
+               && pi.Item.TicketType == Enums.TicketType.YearTicket);
+            temp.YearPrice = (int) pricelistItem.Price;
+            
+            response.Data = temp;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+
+         return response;
+      }
    }
 }

@@ -9,7 +9,7 @@ using TicketAPI.Services;
 
 namespace TicketAPI.Controllers
 {
-   [Authorize]
+   [Authorize(Roles = "Admin")]
    [Route("[controller]")]
    [ApiController]
    public class TicketController : ControllerBase
@@ -26,6 +26,39 @@ namespace TicketAPI.Controllers
       public IActionResult Test()
       {
          return Ok("test");
+      }
+
+      [HttpGet("getPricelist")]
+      public async Task<IActionResult> GetPricelist()
+      {
+         ServiceResponse<PricelistDTO> response = await _ticketService.GetPricelist();
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
+      }
+
+      [HttpPut("editPricelist")]
+      public async Task<IActionResult> UpdatePricelist(PricelistDTO request)
+      {
+         ServiceResponse<PricelistDTO> response = await _ticketService.UpdatePricelist(request);
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
+      }
+
+      [HttpPost("createPricelist")]
+      public async Task<IActionResult> CreatePricelist(PricelistDTO request)
+      {
+         ServiceResponse<PricelistDTO> response = await _ticketService.CreatePricelist(request);
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
       }
 
       [AllowAnonymous]
@@ -45,7 +78,6 @@ namespace TicketAPI.Controllers
          {
             return BadRequest(response);
          }
-         // TODO: Send email data.Email
          return Ok(response);
       }
 

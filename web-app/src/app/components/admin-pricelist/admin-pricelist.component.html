@@ -1,0 +1,120 @@
+<body><br><br><br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-edit" role="tab" aria-controls="nav-home" aria-selected="true">Edit pricelist</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-profile" aria-selected="false">Create new</a>
+              </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-edit" role="tabpanel" aria-labelledby="nav-home-tab">
+                <form class="form-signin" [formGroup]="editPricelistForm">
+                  <br>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>From: </label>
+                      <div class="form-label-group">
+                        <input type="date" name="from" class="form-control" required formControlName="from">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label>To: </label>
+                      <div class="form-label-group">
+                        <input type="date" name="to" class="form-control" required formControlName="to">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label>Hour price: </label>
+                        <div class="form-label-group">
+                          <input type="text" name="hour" class="form-control" required formControlName="hourPrice">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                          <label>Day price: </label>
+                          <div class="form-label-group">
+                            <input type="text" name="day" class="form-control" required formControlName="dayPrice">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label>Month price: </label>
+                        <div class="form-label-group">
+                          <input type="text" name="month" class="form-control" required formControlName="monthPrice">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label>Year price: </label>
+                        <div class="form-label-group">
+                          <input type="text" name="year" class="form-control" required formControlName="yearPrice">
+                        </div><br>
+                      </div>
+                  </div>
+                  <div>
+                      <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="editPricelist()">save</button>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <form class="form-signin" [formGroup]="createPricelistForm">
+                  <br>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>From: </label>
+                      <div class="form-label-group">
+                        <input type="date" name="from" class="form-control" required formControlName="from">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label>To: </label>
+                      <div class="form-label-group">
+                        <input type="date" name="to" class="form-control" required formControlName="to">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label>Hour price: </label>
+                        <div class="form-label-group">
+                          <input type="text" name="hour" class="form-control" required formControlName="hourPrice">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                          <label>Day price: </label>
+                          <div class="form-label-group">
+                            <input type="text" name="day" class="form-control" required formControlName="dayPrice">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label>Month price: </label>
+                        <div class="form-label-group">
+                          <input type="text" name="month" class="form-control" required formControlName="monthPrice">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label>Year price: </label>
+                        <div class="form-label-group">
+                          <input type="text" name="year" class="form-control" required formControlName="yearPrice">
+                        </div><br>
+                      </div>
+                  </div>
+                  <div>
+                      <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="createPricelist()">create pricelist</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

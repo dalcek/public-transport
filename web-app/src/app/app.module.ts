@@ -13,6 +13,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { BuyATicketComponent } from './components/buy-a-ticket/buy-a-ticket.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { AdminPricelistComponent } from './components/admin-pricelist/admin-pricelist.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     RegisterComponent,
     ProfileComponent,
     PricelistComponent,
-    BuyATicketComponent
+    BuyATicketComponent,
+    AdminPricelistComponent
   ],
   imports: [
     BrowserModule,

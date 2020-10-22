@@ -61,6 +61,23 @@ export class PaymentDTO {
   }
 }
 
+export class PricelistDTO {
+  From: string;
+  To: string;
+  HourPrice: number;
+  DayPrice: number;
+  MonthPrice: number;
+  YearPrice: number;
+
+  constructor (from: string, to: string, hourPrice: number, dayPrice: number, monthPrice: number, yearPrice: number) {
+    this.From = from;
+    this.To = to;
+    this.HourPrice = hourPrice;
+    this.MonthPrice = monthPrice;
+    this.YearPrice = yearPrice;
+  }
+}
+
 export class ServiceResponse<T> {
   Data: T;
   Success: Boolean;

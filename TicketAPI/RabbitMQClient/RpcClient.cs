@@ -26,7 +26,6 @@ namespace TicketAPI.RabbitMQClient
         channel = connection.CreateModel();
         replyQueueName = channel.QueueDeclare().QueueName;
         consumer = new EventingBasicConsumer(channel);
-        Console.WriteLine("RPC Client pre consume");
         consumer.Received += (model, ea) =>
         {
             if (!callbackMapper.TryRemove(ea.BasicProperties.CorrelationId, out TaskCompletionSource<string> tcs))
@@ -37,7 +36,6 @@ namespace TicketAPI.RabbitMQClient
             var response = Encoding.UTF8.GetString(body);
             tcs.TrySetResult(response);
         };
-        Console.WriteLine("RPC Client odradio1");
       }
       public Task<string> CallAsync(string message, CancellationToken cancellationToken = default(CancellationToken))
       {
