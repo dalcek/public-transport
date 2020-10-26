@@ -1,0 +1,50 @@
+<body>
+   <br><br><br>
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+               <div class="card-body">
+                  <form class="form-signin" [formGroup]="timetableForm">
+                     <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                           <div class="form-label-group">
+                              <select id="selectLabel" name="dayType" class="form-control" (change)="onDayTypeChange()" formControlName="dayType" >
+                                 <option value="Weekday">Weekday</option>
+                                 <option value="Weekend">Weekend</option>
+                              </select>
+                              <br>
+                              <select name="lineType" id="selectLabel" class="form-control" (change)="onLineTypeChange()"  formControlName="lineType">
+                                 <option value="City">City</option>
+                                 <option value="Suburban">Suburban</option>
+                              </select>
+                              <br>
+                              <select name="lineName" id="selectLabel" class="form-control" (change)="onLineChange($event)" required formControlName="lineName">
+                                 <option value="Choose line">Choose line</option>
+                                 <option *ngFor="let line of lines" value="{{line.id}}"> {{line.name}}</option>
+                              </select>
+                              <br>
+                           </div>
+                           <br><br><br>
+                        </div>
+                        <div class="col-md-3 col-lg-5">
+                           <div class="form-label-group">
+                              <ul class="list-group">
+                                 <li *ngFor="let item of departures">
+                                    {{item.time}}
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div> 
+</body> 
+    
+   
+   
+     

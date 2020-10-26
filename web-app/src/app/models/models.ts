@@ -78,6 +78,28 @@ export class PricelistDTO {
   }
 }
 
+export class AddDepartureDTO {
+   Id: number;
+   Time: string;
+   TimetableId: number;
+
+   constructor (id: number, time: string, timetableId: number) {
+      this.Id = id;
+      this.Time = time;
+      this.TimetableId = timetableId;
+   }
+}
+
+export class DepartureDTO {
+   Id: number;
+   Time: string;
+}
+
+export class LineNameDTO {
+   Id: number;
+   Name: string;
+}
+
 export class ServiceResponse<T> {
   Data: T;
   Success: Boolean;

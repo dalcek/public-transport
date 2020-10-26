@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { PricelistDTO } from 'src/app/models/models';
+import { AddDepartureDTO, PricelistDTO } from 'src/app/models/models';
 import { TicketService } from 'src/app/services/ticket/ticket.service';
 
 @Component({
@@ -33,7 +33,15 @@ export class AdminPricelistComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private ticketService: TicketService) { }
 
   ngOnInit(): void {
-    this.getPricelist();
+   this.getPricelist();
+   //  this.ticketService.addDeparture(new AddDepartureDTO(1, "23.10.2020. 07:45:00", 1)).subscribe(
+   //     result => {
+   //       console.log(result);
+   //     },
+   //     err => {
+   //       console.log(err.error.message);
+   //     }
+   //  );
   }
 
   getPricelist() {
@@ -74,6 +82,16 @@ export class AdminPricelistComponent implements OnInit {
   }
 
   createPricelist() {
-    this.tab = '#nav-new'
+    this.ticketService.createPricelist(new PricelistDTO(this.createPricelistForm.controls.from.value, this.createPricelistForm.controls.to.value,
+      this.createPricelistForm.controls.hourPrice.value, this.createPricelistForm.controls.dayPrice.value,
+      this.createPricelistForm.controls.monthPrice.value, this.createPricelistForm.controls.yearPrice.value)).subscribe(
+        result => {
+          location.reload();
+        },
+        err => {
+          console.log(err.error.message);
+          window.alert("Pricelist edit failed.");
+        }
+      );
   }
 }

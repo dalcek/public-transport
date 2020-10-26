@@ -14,6 +14,8 @@ import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { BuyATicketComponent } from './components/buy-a-ticket/buy-a-ticket.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { AdminPricelistComponent } from './components/admin-pricelist/admin-pricelist.component';
+import { TimetableComponent } from './components/timetable/timetable.component';
+import { AdminTimetableComponent } from './components/admin-timetable/admin-timetable.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { AdminPricelistComponent } from './components/admin-pricelist/admin-pric
     ProfileComponent,
     PricelistComponent,
     BuyATicketComponent,
-    AdminPricelistComponent
+    AdminPricelistComponent,
+    TimetableComponent,
+    AdminTimetableComponent
   ],
   imports: [
     BrowserModule,

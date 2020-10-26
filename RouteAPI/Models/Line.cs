@@ -8,7 +8,7 @@ namespace RouteAPI.Models
       public int Id { get; set; }
       public string Name { get; set; }
       public LineType Type { get; set; }
-      // TODO: Add fluent expression for this
-      public List<Coordinate> Coordinates { get; set; }      
+      public List<Coordinate> Coordinates { get; set; }
+      public List<LineStation> LineStations { get; set; }      
    }
 }

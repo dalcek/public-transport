@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { CreateTicketDTO, PricelistDTO } from '../../models/models';
+import { AddDepartureDTO, CreateTicketDTO, PricelistDTO } from '../../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +61,15 @@ export class TicketService {
     return this.http.put(`${this.baseUrl}/ticket/editpricelist`, pricelist)
     .pipe(catchError(err => {
       console.log('Error in edit pricelist service');
+      console.error(err);
+      return throwError(err);
+    }));
+  }
+
+  createPricelist(pricelist: PricelistDTO): Observable<any> {
+    return this.http.put(`${this.baseUrl}/ticket/createpricelist`, pricelist)
+    .pipe(catchError(err => {
+      console.log('Error in create pricelist service');
       console.error(err);
       return throwError(err);
     }));

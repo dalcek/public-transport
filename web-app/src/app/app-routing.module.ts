@@ -6,6 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
+import { TimetableComponent } from './components/timetable/timetable.component';
 
 
 const routes: Routes = [{
@@ -36,6 +37,10 @@ const routes: Routes = [{
 {
   path: 'admin-pricelist',
   component: AdminPricelistComponent
+},
+{
+   path: 'timetable',
+   component: TimetableComponent
 }
 ];
 

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace RouteAPI.Models
 {
    public class Station
@@ -7,5 +9,6 @@ namespace RouteAPI.Models
       public string Address { get; set; }
       public double XCoordinate { get; set; }
       public double YCoordinate { get; set; }
+      public List<LineStation> LineStations { get; set; }
    }
 }

@@ -18,7 +18,7 @@ namespace TicketAPI.Controllers
 
       public TicketController(ITicketService ticketService)
       {
-          _ticketService = ticketService;
+         _ticketService = ticketService;
       }
 
       [AllowAnonymous]

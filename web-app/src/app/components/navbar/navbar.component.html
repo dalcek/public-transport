@@ -22,6 +22,9 @@
             <a class="nav-link"  routerLink="/buy-a-ticket" *ngIf="loggedIn==null || loggedIn=='AppUser'">Buy a ticket</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link"  routerLink="/timetable" *ngIf="loggedIn==null || loggedIn=='AppUser'">Timetable</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link"  routerLink="/profile" *ngIf="loggedIn!=null">Profile</a>
           </li>
           <li class="nav-item">
