@@ -23,6 +23,7 @@ export class RouteService {
    }
 
    editDeparture(departure: AddDepartureDTO): Observable<any> {
+      console.log(departure);
       return this.http.put(`${this.baseUrl}/route/editDeparture`, departure)
       .pipe(catchError(err => {
          console.log('Error in edit departure service');
@@ -49,7 +50,7 @@ export class RouteService {
       }));
    }
 
-   getDepartires(dayType: string, lineType: string, lineId: number): Observable<any> {
+   getDepartures(dayType: string, lineType: string, lineId: number): Observable<any> {
       return this.http.get(`${this.baseUrl}/route/getDepartures?dayType=${dayType}&lineType=${lineType}&lineId=${lineId}`)
       .pipe(catchError(err => {
          console.log('Error in get lines service');

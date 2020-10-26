@@ -91,8 +91,8 @@ export class AddDepartureDTO {
 }
 
 export class DepartureDTO {
-   Id: number;
-   Time: string;
+   public Id: number;
+   public Time: string;
 }
 
 export class LineNameDTO {

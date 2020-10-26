@@ -32,7 +32,6 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private accountService: AccountService) { }
 
   ngOnInit(): void {
-    //this.user.UserType = 'RegularUser';
   }
 
   populateUser() {
@@ -88,7 +87,6 @@ export class RegisterComponent implements OnInit {
     let password = group.controls.password.value;
     let confirmPassword = group.controls.confirmPassword.value;
     return password == confirmPassword ? false : true;
-    //return password == confirmPassword ? null : {notSame: true}
   }
   // TODO: share this method from login component instead of copying the code
   login(){

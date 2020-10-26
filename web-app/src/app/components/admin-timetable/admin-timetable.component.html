@@ -1,1 +1,79 @@
-<p>admin-timetable works!</p>
+<body>
+   <br><br><br>
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-9 col-md-7 col-lg-6 mx-auto">
+            <div class="card card-signin my-5">
+               <div class="card-body">
+                  <form class="form-signin" [formGroup]="timetableForm">
+                     <div class="row">
+                        <div class="col-md-4 col-lg-7">
+                           <div class="form-label-group">
+                              <select id="selectLabel" name="dayType" class="form-control" (change)="onDayTypeChange()" formControlName="dayType" >
+                                 <option value="Weekday">Weekday</option>
+                                 <option value="Weekend">Weekend</option>
+                              </select>
+                              <br>
+                              <select name="lineType" id="selectLabel" class="form-control" (change)="onLineTypeChange()"  formControlName="lineType">
+                                 <option value="City">City</option>
+                                 <option value="Suburban">Suburban</option>
+                              </select>
+                              <br>
+                              <select name="lineName" id="selectLabel" class="form-control" (change)="onLineChange($event)" required formControlName="lineName">
+                                 <option value="Choose line">Choose line</option>
+                                 <option *ngFor="let line of lines" value="{{line.id}}"> {{line.name}}</option>
+                              </select>
+                              <br>
+                              <select *ngIf="this.timetableForm.controls.lineName.value!='Choose line'" id="selectLabel" class="form-control" (change)="onDepartureChange($event)" required formControlName="departure">
+                                 <option value="choose">Choose to add or edit</option>
+                                 <option value="add">Add departure</option>
+                                 <option *ngFor="let departure of departures" value="{{departure.id}}"> {{departure.time}}</option>
+                              </select>
+                              <div *ngIf="this.timetableForm.controls.departure.value=='add'">
+                                 <br>
+                                 <div class="row">
+                                    <div class="col-md-4 col-lg-6">
+                                       <input type="time" id="timeInput" class="form-control" required placeholder="Departure time" formControlName="time">
+                                    </div>
+                                    <div class="col-md-4 col-lg-6">
+                                       <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="addDeparture()">add</button>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div *ngIf="this.timetableForm.controls.departure.value!='add' && this.timetableForm.controls.departure.value!='choose'">
+                                 <br>
+                                 <input type="time" id="timeInput" class="form-control" required placeholder="Departure time" formControlName="time">
+                                 <br>
+                                 <div class="row">
+                                    <div class="col-md-4 col-lg-6">
+                                       <button class="btn btn-lg btn-primary btn-block text-uppercase" id="deleteButton" (click)="deleteDeparture()">delete</button>
+                                    </div>
+                                    <div class="col-md-4 col-lg-6">
+                                       <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="editDeparture()">edit</button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <br><br><br>
+                        </div>
+                        <div class="col-md-3 col-lg-5">
+                           <div class="form-label-group">
+                              <ul class="list-group">
+                                 <li *ngFor="let item of departures">
+                                    {{item.time}}
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div> 
+</body> 
+    
+   
+   
+     

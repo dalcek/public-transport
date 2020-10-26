@@ -23,12 +23,15 @@ namespace RouteAPI.Services
       {
          ServiceResponse<GetDeparturesDTO> response = new ServiceResponse<GetDeparturesDTO>();
          List<DepartureDTO> departureDTOs = new List<DepartureDTO>();
+         // Doesnt work without the date
+         string time = "23.10.2020. " + newDeparture.Time;
          try
          {
             Departure departure = await _context.Departures.FirstOrDefaultAsync(d => d.Id == newDeparture.Id);
+            DateTime tmp = Convert.ToDateTime(time);
             if (departure != null)
             {
-               departure.Time = Convert.ToDateTime(newDeparture.Time);
+               departure.Time = tmp;
                _context.Departures.Update(departure);
                await _context.SaveChangesAsync();
 
@@ -39,9 +42,8 @@ namespace RouteAPI.Services
 
                foreach (var dep in timetable.Departures)
                {
-                  departureDTOs.Add(new DepartureDTO { Id = dep.Id, Time = dep.Time.ToString()});
+                  departureDTOs.Add(new DepartureDTO { Id = dep.Id, Time = dep.Time.ToString().Split(' ')[1].Substring(0, 5)});
                }
-
                response.Data = new GetDeparturesDTO { TimetableId = timetable.Id, Departures = departureDTOs };
             }
             else
@@ -61,13 +63,15 @@ namespace RouteAPI.Services
       {
          ServiceResponse<GetDeparturesDTO> response = new ServiceResponse<GetDeparturesDTO>();
          List<DepartureDTO> departures = new List<DepartureDTO>();
-         DateTime tmp = Convert.ToDateTime(newDeparture.Time);
+         // Doesnt work without the date
+         string time = "23.10.2020. " + newDeparture.Time;
          try
          {
+            DateTime tmp = Convert.ToDateTime(time);
             await _context.Departures.AddAsync(
                new Departure
                {
-                  Time = Convert.ToDateTime(newDeparture.Time),
+                  Time = tmp,
                   TimetableId = newDeparture.TimetableId 
                }
             );
@@ -84,7 +88,7 @@ namespace RouteAPI.Services
             {
                foreach (var dep in timetable.Departures)
                {
-                  departures.Add(new DepartureDTO { Id = dep.Id, Time = dep.Time.ToString() });
+                  departures.Add(new DepartureDTO { Id = dep.Id, Time = dep.Time.ToString().Split(' ')[1].Substring(0, 5) });
                }
                response.Data = new GetDeparturesDTO { TimetableId = timetable.Id, Departures = departures };
             }
@@ -109,7 +113,6 @@ namespace RouteAPI.Services
          Enums.DayType day = (Enums.DayType) Enum.Parse(typeof(Enums.DayType), dayType);
          //Enums.LineType line = (Enums.LineType) Enum.Parse(typeof(Enums.LineType), lineType);
          List<DepartureDTO> departures = new List<DepartureDTO>();
-         string formattedTime;
 
          try
          {
@@ -117,7 +120,6 @@ namespace RouteAPI.Services
                .Include(t => t.Departures)
                .FirstOrDefaultAsync(t => t.Active == true && t.DayType == day && t.LineId == lineId);
 
-            //timetable.Departures.OrderByDescending(d => d.Time);
             if (timetable != null)
             {
                foreach (var departure in timetable.Departures)
@@ -125,15 +127,7 @@ namespace RouteAPI.Services
                   departures.Add(new DepartureDTO
                      { 
                         Id = departure.Id,
-                        Time = departure.Time.ToString().Split(' ')[1].Substring(0, 5)
-                     }
-                  );
-               }
-               foreach (var departure in timetable.Departures)
-               {
-                  departures.Add(new DepartureDTO
-                     { 
-                        Id = departure.Id,
+                        // Removing the date part
                         Time = departure.Time.ToString().Split(' ')[1].Substring(0, 5)
                      }
                   );
