@@ -1,0 +1,48 @@
+<body>
+   <br><br><br>
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-9 col-md-7 col-lg-4 mx-auto">
+            <div class="card card-signin my-5">
+               <div class="card-body">
+                  <h5 class="card-title text-center">STATIONS</h5>
+                  <form class="form-signin" [formGroup]="lineForm">
+                     <div class="form-label-group">
+                        <select id="selectLabel" formControlName="select" class="form-control" (change)="onSelect($event)">
+                           <option value="choose">Choose line to edit</option>
+                           <option *ngFor="let item of lines" value="{{item.id}}">{{item.name}}</option>
+                        </select>
+                     </div>
+                     <div *ngIf="this.lineForm.controls.select.value != 'choose'">
+                        <div class="form-label-group">
+                           <input name="name" type="text" class="form-control" placeholder="Name" formControlName="name">
+                        </div>
+                        <div class="form-label-group">
+                           <select id="selectLabel" formControlName="type" class="form-control">
+                              <option value="City">City</option>
+                              <option value="Suburban">Suburban</option>
+                           </select>
+                        </div>
+                        <div class="list-group">
+                           <div *ngFor="let i of indexes">
+                              <input type="checkbox" id="#check" [checked]="stationsCheck[i]" value="{{stations[i]['id']}}" (change)="onCheckValueChange(stations[i]['id'], i)">{{stations[i]['name']}}
+                              <br>
+                           </div>
+                        </div>
+                           <br>
+                        <div class="row">
+                           <div class="col-md-4 col-lg-6">
+                              <button class="btn btn-lg btn-primary btn-block text-uppercase" id="deleteButton" (click)="deleteLine()">delete</button>
+                           </div>
+                           <div class="col-md-4 col-lg-6">
+                              <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="editLine()">save</button>
+                           </div>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</body>

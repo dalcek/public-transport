@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminLinesComponent } from './components/admin-lines/admin-lines.component';
 import { AdminPricelistComponent } from './components/admin-pricelist/admin-pricelist.component';
 import { AdminStationsComponent } from './components/admin-stations/admin-stations.component';
 import { AdminTimetableComponent } from './components/admin-timetable/admin-timetable.component';
@@ -51,6 +52,10 @@ const routes: Routes = [{
 {
    path: 'admin-stations',
    component: AdminStationsComponent
+},
+{
+   path: 'admin-lines',
+   component: AdminLinesComponent
 }
 ];
 

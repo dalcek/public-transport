@@ -137,5 +137,41 @@ namespace RouteAPI.Controller
          }
          return Ok(response);
       }
+
+      [AllowAnonymous]
+      [HttpGet("getLines")]
+      public async Task<IActionResult> GetLines()
+      {
+         ServiceResponse<List<LineDTO>> response = await _routeService.GetLines();
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
+      }
+
+      [AllowAnonymous]
+      [HttpPut("editLine")]
+      public async Task<IActionResult> UpdateLine(LineDTO request)
+      {
+         ServiceResponse<List<LineDTO>> response = await _routeService.UpdateLine(request);
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
+      }
+
+      [AllowAnonymous]
+      [HttpDelete("deleteLine")]
+      public async Task<IActionResult> DeleteLine(int id)
+      {
+         ServiceResponse<int> response = await _routeService.DeleteLine(id);
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
+      }
    }
 }

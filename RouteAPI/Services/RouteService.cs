@@ -194,6 +194,101 @@ namespace RouteAPI.Services
          return response;
       }
 
+      public async Task<ServiceResponse<List<LineDTO>>> GetLines()
+      {
+         ServiceResponse<List<LineDTO>> response = new ServiceResponse<List<LineDTO>>();
+         List<LineDTO> lineDTOs = new List<LineDTO>();
+         LineDTO lineDTO = new LineDTO();
+         try
+         {
+            List<Line> lines = await _context.Lines.Include(l => l.LineStations).ToListAsync();
+            foreach (var line in lines)
+            {
+               lineDTO.Id = line.Id;
+               lineDTO.Name = line.Name;
+               lineDTO.Type = line.Type.ToString();
+               lineDTO.StationIds = new List<int>();
+               foreach (var item in line.LineStations)
+               {
+                  lineDTO.StationIds.Add(item.StationId);
+               }
+               lineDTOs.Add(lineDTO);
+            }
+            response.Data = lineDTOs;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<List<LineDTO>>> UpdateLine(LineDTO newLine)
+      {
+         ServiceResponse<List<LineDTO>> response = new ServiceResponse<List<LineDTO>>();
+         List<LineDTO> lineDTOs = new List<LineDTO>();
+         LineDTO lineDTO = new LineDTO();
+         List<LineStation> lineStations = new List<LineStation>();
+         Enums.LineType type = (Enums.LineType) Enum.Parse(typeof(Enums.LineType), newLine.Type);
+         
+         foreach (int id in newLine.StationIds)
+         {
+            lineStations.Add(new LineStation { StationId = id, LineId = newLine.Id });
+         }
+         try
+         {
+            Line line = await _context.Lines.Include(l => l.LineStations).FirstOrDefaultAsync(l => l.Id == newLine.Id);
+            _context.RemoveRange(line.LineStations);
+            await _context.SaveChangesAsync();
+            line.Name = newLine.Name;
+            line.Type = type;
+            line.LineStations = lineStations;
+            _context.Lines.Update(line);
+            await _context.SaveChangesAsync();
+
+            List<Line> lines = await _context.Lines.Include(l => l.LineStations).ToListAsync();
+            foreach (var temp in lines)
+            {
+               lineDTO.Id = temp.Id;
+               lineDTO.Name = temp.Name;
+               lineDTO.Type = temp.Type.ToString();
+               lineDTO.StationIds = new List<int>();
+               foreach (var item in temp.LineStations)
+               {
+                  lineDTO.StationIds.Add(item.StationId);
+               }
+               lineDTOs.Add(lineDTO);
+            }
+            response.Data = lineDTOs;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+
+      public async Task<ServiceResponse<int>> DeleteLine(int id)
+      {
+         ServiceResponse<int> response = new ServiceResponse<int>();
+
+         try
+         {
+            Line line = await _context.Lines.FirstOrDefaultAsync(l => l.Id == id);
+            _context.Lines.Remove(line);
+            await _context.SaveChangesAsync();
+            response.Data = line.Id; 
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
       public async Task<ServiceResponse<List<Station>>> GetStations()
       {
          ServiceResponse<List<Station>> response = new ServiceResponse<List<Station>>();

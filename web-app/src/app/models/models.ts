@@ -100,6 +100,16 @@ export class LineNameDTO {
    Name: string;
 }
 
+export class StationDTO {
+   Id: number;
+   Name: string;
+
+   constructor (id: number, name: string) {
+      this.Id = id;
+      this.Name = name;
+   }
+}
+
 export class AddStationDTO {
    Name: string;
    Address: string;
@@ -128,6 +138,20 @@ export class Station {
       this.Address = address;
       this.XCoordinate = xCoordinate;
       this.YCoordinate = yCoordinate;
+   }
+}
+
+export class LineDTO {
+   Id: number;
+   Name: string;
+   Type: string;
+   StationIds: any[];
+
+   constructor (id: number, name: string, type: string, stationIds: any[]) {
+      this.Id = id;
+      this.Name = name;
+      this.Type = type;
+      this.StationIds = stationIds;
    }
 }
 

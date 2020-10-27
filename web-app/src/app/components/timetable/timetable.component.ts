@@ -26,7 +26,7 @@ export class TimetableComponent implements OnInit {
    }
 
    getLines() {
-      this.routeService.getLines(this.timetableForm.controls.dayType.value, this.timetableForm.controls.lineType.value).subscribe(
+      this.routeService.getLineNames(this.timetableForm.controls.dayType.value, this.timetableForm.controls.lineType.value).subscribe(
          result => {
             this.lines = result.data;
             console.log(this.lines);
@@ -53,7 +53,7 @@ export class TimetableComponent implements OnInit {
       console.log(event.target.value);
       if (event.target.value != 'Choose line')
       {
-         this.routeService.getDepartires(this.timetableForm.controls.dayType.value, this.timetableForm.controls.lineType.value, event.target.value).subscribe(
+         this.routeService.getDepartures(this.timetableForm.controls.dayType.value, this.timetableForm.controls.lineType.value, event.target.value).subscribe(
             result => {
                this.departures = result.data.departures;
                console.log(this.departures);
