@@ -100,6 +100,37 @@ export class LineNameDTO {
    Name: string;
 }
 
+export class AddStationDTO {
+   Name: string;
+   Address: string;
+   XCoordinate: number;
+   YCoordinate: number;
+
+   constructor (name: string, address: string, xCoordinate: number, yCoordinate: number) {
+      this.Name = name;
+      this.Address = address;
+      this.XCoordinate = xCoordinate;
+      this.YCoordinate = yCoordinate;
+   }
+}
+
+export class Station {
+   Id: number;
+   Name: string;
+   Address: string;
+   XCoordinate: number;
+   YCoordinate: number;
+   LineStations: any;
+
+   constructor (id: number, name: string, address: string, xCoordinate: number, yCoordinate: number) {
+      this.Id = id;
+      this.Name = name;
+      this.Address = address;
+      this.XCoordinate = xCoordinate;
+      this.YCoordinate = yCoordinate;
+   }
+}
+
 export class ServiceResponse<T> {
   Data: T;
   Success: Boolean;

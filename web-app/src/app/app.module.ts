@@ -16,6 +16,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { AdminPricelistComponent } from './components/admin-pricelist/admin-pricelist.component';
 import { TimetableComponent } from './components/timetable/timetable.component';
 import { AdminTimetableComponent } from './components/admin-timetable/admin-timetable.component';
+import { AdminStationsComponent } from './components/admin-stations/admin-stations.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AdminTimetableComponent } from './components/admin-timetable/admin-time
     BuyATicketComponent,
     AdminPricelistComponent,
     TimetableComponent,
-    AdminTimetableComponent
+    AdminTimetableComponent,
+    AdminStationsComponent
   ],
   imports: [
     BrowserModule,

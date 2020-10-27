@@ -123,7 +123,6 @@ export class AdminTimetableComponent implements OnInit {
    deleteDeparture() {
       this.routeService.deleteDeparture(this.departureId).subscribe(
          result => {
-            
             this.timetableForm.controls.departure.setValue('choose');
             this.timetableForm.controls.time.setValue('');
             this.getDepartures();

@@ -11,5 +11,10 @@ namespace RouteAPI.Services
       Task<ServiceResponse<GetDeparturesDTO>> UpdateDeparture(AddDepartureDTO newDeparture);
       Task<ServiceResponse<int>> DeleteDeparture(int id);
       Task<ServiceResponse<List<LineNameDTO>>> GetLineNames(string dayType, string lineType);
+      Task<ServiceResponse<List<Station>>> GetStations();
+      Task<ServiceResponse<List<StationDTO>>> GetStationNames();
+      Task<ServiceResponse<List<Station>>> AddStation(AddStationDTO station);
+      Task<ServiceResponse<List<Station>>> UpdateStation(Station newStation);
+      Task<ServiceResponse<List<Station>>> DeleteStation(int id);
    }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using RouteAPI.Data;
@@ -13,10 +14,12 @@ namespace RouteAPI.Services
    {
       private readonly DataContext _context;
       private readonly IHttpContextAccessor _httpContextAccessor;
-      public RouteService(DataContext context, IHttpContextAccessor httpContextAccessor)
+      private readonly IMapper _mapper;
+      public RouteService(DataContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper)
       {
          _context = context;
          _httpContextAccessor = httpContextAccessor;
+         _mapper = mapper;
       }
 
       public async Task<ServiceResponse<GetDeparturesDTO>> UpdateDeparture(AddDepartureDTO newDeparture)
@@ -182,6 +185,112 @@ namespace RouteAPI.Services
                lineNames.Add(new LineNameDTO {Id = temp.Id, Name = temp.Name});
             }
             response.Data = lineNames;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<List<Station>>> GetStations()
+      {
+         ServiceResponse<List<Station>> response = new ServiceResponse<List<Station>>();
+         try
+         {
+            List<Station> stations = await _context.Stations.ToListAsync();
+            //stations = await _context.Stations.Where(s => s.LineStations.Any(ls => ls.Line.Id == 1)).ToListAsync();
+            response.Data = stations;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<List<StationDTO>>> GetStationNames()
+      {
+         ServiceResponse<List<StationDTO>> response = new ServiceResponse<List<StationDTO>>();
+         List<StationDTO> stationDTOs = new List<StationDTO>();
+
+         try
+         {
+            List<Station> stations = await _context.Stations.ToListAsync();
+            foreach (var station in stations)
+            {
+               stationDTOs.Add(new StationDTO{ Id = station.Id, Name = station.Name });
+            }
+            response.Data = stationDTOs;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<List<Station>>> AddStation(AddStationDTO station)
+      {
+         ServiceResponse<List<Station>> response = new ServiceResponse<List<Station>>();
+         
+         try
+         {
+            await _context.Stations.AddAsync(new Station{ Name = station.Name, Address = station.Address, XCoordinate = station.XCoordinate, YCoordinate = station.YCoordinate});
+            await _context.SaveChangesAsync();
+            response.Data = await _context.Stations.ToListAsync();
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<List<Station>>> UpdateStation(Station newStation)
+      {
+         ServiceResponse<List<Station>> response = new ServiceResponse<List<Station>>();
+         try
+         {
+            Station station = await _context.Stations.FirstOrDefaultAsync(s => s.Id == newStation.Id);
+            if (station != null)
+            {
+               station.Name = newStation.Name;
+               station.Address = newStation.Address;
+               station.XCoordinate = newStation.XCoordinate;
+               station.YCoordinate = newStation.YCoordinate;
+
+               _context.Stations.Update(station);
+               await _context.SaveChangesAsync();
+               response.Data = await _context.Stations.ToListAsync();
+            }
+            else
+            {
+               response.Success = false;
+               response.Message = "Station with the given id was not found.";
+            }
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<List<Station>>> DeleteStation(int id)
+      {
+         ServiceResponse<List<Station>> response = new ServiceResponse<List<Station>>();
+         try
+         {
+            Station station = await _context.Stations.FirstOrDefaultAsync(s => s.Id == id);
+            _context.Stations.Remove(station);
+            await _context.SaveChangesAsync();
+            response.Data = await _context.Stations.ToListAsync();
          }
          catch (Exception e)
          {
