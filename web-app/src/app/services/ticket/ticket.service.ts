@@ -48,6 +48,15 @@ export class TicketService {
     }));
   }
 
+  validateTicket(id: number): Observable<any> {
+   return this.http.get(`${this.baseUrl}/ticket/validate?id=${id}`)
+   .pipe(catchError(err => {
+     console.log('Error in validate ticket service');
+     console.error(err);
+     return throwError(err);
+   }));
+ }
+
   getPricelist(): Observable<any> {
     return this.http.get(`${this.baseUrl}/ticket/getpricelist`)
     .pipe(catchError(err => {

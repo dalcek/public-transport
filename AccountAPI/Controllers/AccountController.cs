@@ -93,12 +93,33 @@ namespace AccountAPI.Controllers
       {
          var httpRequest = Request;
          ServiceResponse<string> response = await _accountService.UploadImage(Request);
-
          if (!response.Success)
          {
             return BadRequest(response);
          }
+         return Ok(response);
+      }
+      [AllowAnonymous]
+      [HttpGet("getUnvalidatedUsers")]
+      public async Task<IActionResult> GetUnvalidatedUsers()
+      {
+         ServiceResponse<List<GetUserDTO>> response = await _accountService.GetUnvalidatedUsers();
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
+      }
 
+      [AllowAnonymous]
+      [HttpGet("validate")]
+      public async Task<IActionResult> Validate(string email, bool accepted)
+      {
+         ServiceResponse<string> response = await _accountService.Validate(email, accepted);
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
          return Ok(response);
       }
    }

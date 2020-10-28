@@ -10,7 +10,7 @@ import { of } from 'rxjs/internal/observable/of';
 })
 export class AccountService {
 
-  baseUrl = 'http://localhost:6001';
+  baseUrl = 'http://localhost:5000';
 
 
   constructor(private http: HttpClient) { }
@@ -53,6 +53,23 @@ export class AccountService {
       }));
   }
 
+  getUnvalidatedUsers(): Observable<any> {
+   return this.http.get(`${this.baseUrl}/account/getUnvalidatedUsers`)
+     .pipe(catchError((err) => {
+       console.log('Error in get unvalidated users service');
+       console.error(err);
+       return throwError(err)
+     }));
+  }
+  validate(email: string, accepted: boolean): Observable<any> {
+   return this.http.get(`${this.baseUrl}/account/validate?email=${email}&accepted=${accepted}`)
+     .pipe(catchError((err) => {
+       console.log('Error in validating user service');
+       console.error(err);
+       return throwError(err)
+     }));
+  }
+
   uploadImage(image: any): Observable<any>{
     return this.http.post(`${this.baseUrl}/account/uploadimage`, image)
     .pipe(catchError((err) => {
@@ -60,11 +77,5 @@ export class AccountService {
       console.error(err);
       return throwError(err)
     }));
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      return of(result as T);
-    };
   }
 }

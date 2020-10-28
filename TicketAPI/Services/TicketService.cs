@@ -276,5 +276,56 @@ namespace TicketAPI.Services
 
          return response;
       }
+
+      public async Task<ServiceResponse<bool>> ValidateTicket(int id)
+      {
+         ServiceResponse<bool> response = new ServiceResponse<bool>();
+
+         try
+         {
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+            if (ticket.PricelistItem.Item.TicketType == Enums.TicketType.HourTicket)
+            {
+               if ((DateTime.Now.Ticks - ticket.IssueTime.Ticks) < 36000000000)
+               {
+                  response.Data = true;
+               }
+            }
+            else if (ticket.PricelistItem.Item.TicketType == Enums.TicketType.DayTicket)
+            {
+               if (ticket.IssueTime.Year == DateTime.Now.Year && 
+                  ticket.IssueTime.Month == DateTime.Now.Month &&
+                  ticket.IssueTime.Day == DateTime.Now.Day)
+               {
+                  response.Data = true;
+               }
+            }
+            else if (ticket.PricelistItem.Item.TicketType == Enums.TicketType.MonthTicket)
+            {
+               if (ticket.IssueTime.Year == DateTime.Now.Year && 
+                  ticket.IssueTime.Month == DateTime.Now.Month)
+               {
+                  response.Data = true;
+               }
+            }
+            else if (ticket.PricelistItem.Item.TicketType == Enums.TicketType.YearTicket)
+            {
+               if (ticket.IssueTime.Year == DateTime.Now.Year)
+               {
+                  response.Data = true;
+               }
+            }
+            response.Data = false;
+            ticket.Valid = false;
+            _context.Tickets.Update(ticket);
+            await _context.SaveChangesAsync();
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
    }
 }

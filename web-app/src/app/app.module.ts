@@ -18,6 +18,8 @@ import { TimetableComponent } from './components/timetable/timetable.component';
 import { AdminTimetableComponent } from './components/admin-timetable/admin-timetable.component';
 import { AdminStationsComponent } from './components/admin-stations/admin-stations.component';
 import { AdminLinesComponent } from './components/admin-lines/admin-lines.component';
+import { ControllerTicketComponent } from './components/controller-ticket/controller-ticket.component';
+import { ControllerUserComponent } from './components/controller-user/controller-user.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { AdminLinesComponent } from './components/admin-lines/admin-lines.compon
     TimetableComponent,
     AdminTimetableComponent,
     AdminStationsComponent,
-    AdminLinesComponent
+    AdminLinesComponent,
+    ControllerTicketComponent,
+    ControllerUserComponent
   ],
   imports: [
     BrowserModule,

@@ -284,5 +284,49 @@ namespace AccountAPI.Services
 
          return tokenHandler.WriteToken(token);
       }
+
+      public async Task<ServiceResponse<List<GetUserDTO>>> GetUnvalidatedUsers()
+      {
+         ServiceResponse<List<GetUserDTO>> response = new ServiceResponse<List<GetUserDTO>>();
+
+         try
+         {
+            List<User> users = await _context.Users.Where(u => u.UserStatus == Enums.UserStatus.InProcess || u.UserStatus == Enums.UserStatus.Denied).ToListAsync();
+            response.Data = new List<GetUserDTO>();
+            response.Data = _mapper.Map<List<GetUserDTO>>(users);
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<string>> Validate(string email, bool accepted)
+      {
+         ServiceResponse<string> response = new ServiceResponse<string>();
+         try
+         {
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (accepted)
+            {
+               user.UserStatus = Enums.UserStatus.Accepted;
+            }
+            else
+            {
+               user.UserStatus = Enums.UserStatus.Denied;
+            }
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            response.Data = email;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
    }
 }

@@ -34,6 +34,12 @@
             <a class="nav-link"  routerLink="/admin-lines" *ngIf="loggedIn==null || loggedIn=='AppUser'">lines</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link"  routerLink="/controller-ticket" *ngIf="loggedIn==null || loggedIn=='AppUser'">ticket</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  routerLink="/controller-user" *ngIf="loggedIn==null || loggedIn=='AppUser'">user</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link"  routerLink="/profile" *ngIf="loggedIn!=null">Profile</a>
           </li>
           <li class="nav-item">

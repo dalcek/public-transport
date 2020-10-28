@@ -14,7 +14,6 @@ namespace TicketAPI.Services
       Task<ServiceResponse<PricelistDTO>> CreatePricelist(PricelistDTO pricelist);
       Task<ServiceResponse<PricelistDTO>> UpdatePricelist(PricelistDTO pricelist);
       Task<ServiceResponse<PricelistDTO>> GetPricelist();
-
-      
+      Task<ServiceResponse<bool>> ValidateTicket(int id);      
    }
 }

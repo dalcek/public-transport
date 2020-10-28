@@ -110,7 +110,18 @@ namespace TicketAPI.Controllers
       public async Task<IActionResult> GetCoefficients()
       {
          ServiceResponse<List<Coefficient>> response = await _ticketService.GetCoefficients();
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
+      }
 
+      [AllowAnonymous]
+      [HttpGet("validate")]
+      public async Task<IActionResult> Validate(int id)
+      {
+         ServiceResponse<bool> response = await _ticketService.ValidateTicket(id);
          if (!response.Success)
          {
             return BadRequest(response);

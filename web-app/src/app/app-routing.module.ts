@@ -5,6 +5,8 @@ import { AdminPricelistComponent } from './components/admin-pricelist/admin-pric
 import { AdminStationsComponent } from './components/admin-stations/admin-stations.component';
 import { AdminTimetableComponent } from './components/admin-timetable/admin-timetable.component';
 import { BuyATicketComponent } from './components/buy-a-ticket/buy-a-ticket.component';
+import { ControllerTicketComponent } from './components/controller-ticket/controller-ticket.component';
+import { ControllerUserComponent } from './components/controller-user/controller-user.component';
 import { LoginComponent } from './components/login/login.component';
 import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -56,6 +58,14 @@ const routes: Routes = [{
 {
    path: 'admin-lines',
    component: AdminLinesComponent
+},
+{
+   path: 'controller-ticket',
+   component: ControllerTicketComponent
+},
+{
+   path: 'controller-user',
+   component: ControllerUserComponent
 }
 ];
 

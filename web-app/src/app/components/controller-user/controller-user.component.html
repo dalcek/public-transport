@@ -1,0 +1,92 @@
+<body>
+   <br><br>
+   <div class="container">
+     <div class="row">
+       <div class="col-lg-6 col-xl-9 mx-auto">
+         <div class="card card-signin flex-row my-5">
+           <!-- Background image for card set in CSS! <img  src="../../../favicon.ico"/> -->
+           <div *ngIf="this.photoPath!=null; else default_photo" class="card-img-custom d-none d-md-flex">
+             <img [attr.src]="this.photoPath" height="300"/>
+           </div>
+           <ng-template #default_photo>
+             <div class="card-img-left d-none d-md-flex">
+             </div>
+           </ng-template>
+           <div class="card-body">
+             <h5 class="card-title text-center">VALIDATE USERS</h5>
+             <br>
+             <form class="form-signin" [formGroup]="profileForm">
+               <div class="form-label-group">
+                  <select id="selectLabel" formControlName="userSelect" class="form-control" (change)="onSelect($event)">
+                     <option *ngIf="this.users.length == 0" value="no">No users to validate</option>
+                     <option *ngIf="this.users.length != 0" value="choose">Choose user</option>
+                     <option *ngFor="let item of users" value="{{item.email}}">{{item.email}}</option>
+                  </select>
+               </div>
+               <div class="row">
+                 <div class="col-md-6">
+                     <div class="form-label-group">
+                         <input type="text" class="form-control" required placeholder="First name" formControlName="name" >
+                     </div>
+                 </div>
+                 <div class="col-md-6">
+                     <div class="form-label-group">
+                         <input type="text" class="form-control" required placeholder="Last name" formControlName="lastName" >
+                       </div>
+                 </div>
+               </div>
+               <div class="form-label-group">
+                 <input type="email" class="form-control" required placeholder="Email address" formControlName="email" >
+               </div>
+               <div class="row">
+                   <div class="col-md-6">
+                       <div class="form-label-group" id="date">
+                         <input type="date" class="form-control" required placeholder="Date of birth" formControlName="dateOfBirth" >
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <div class="form-label-group">
+                        <input type="text" class="form-control" required placeholder="User type" formControlName="userType" >
+                      </div>
+                   </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-6">
+                   <div class="form-label-group">
+                       <input type="text" class="form-control" required placeholder="User status" formControlName="userStatus">
+                   </div>
+                 </div>
+               </div>
+               <br>
+               <div *ngIf="this.users.length != 0" class="row">
+                 <div class="col-md-6">
+                   <div class="form-label-group">
+                     <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="validate()">Validate</button>
+                   </div>
+                 </div>
+                 <div class="col-md-6">
+                   <div class="form-label-group">
+                     <button class="btn btn-lg btn-primary btn-block text-uppercase" id="deleteButton" (click)="deny()">Deny</button>
+                   </div>
+                 </div>
+               </div>
+               <div *ngIf="this.users.length == 0 && this.userEmail != ''" class="row">
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <button class="btn btn-lg btn-primary btn-block text-uppercase disabled" disabled >Validate</button>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-label-group">
+                      <button class="btn btn-lg btn-primary btn-block text-uppercase disabled" disabled id="deleteButton">Deny</button>
+                    </div>
+                  </div>
+                </div>
+             </form>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </body>
+ 

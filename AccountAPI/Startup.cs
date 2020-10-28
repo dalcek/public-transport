@@ -63,7 +63,7 @@ namespace AccountAPI
                o.MultipartBodyLengthLimit = int.MaxValue;
                o.MemoryBufferThreshold = int.MaxValue;
             });
-            
+            /*
             services.AddSingleton<IRabbitMQConnection>(sp =>
             {
                var factory = new ConnectionFactory()
@@ -80,6 +80,7 @@ namespace AccountAPI
             });
 
             services.AddSingleton<RpcServer>();
+            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,6 +93,7 @@ namespace AccountAPI
             // TODO: Write your own CORS policies, more at https://stackoverflow.com/questions/56328474/origin-http-localhost4200-has-been-blocked-by-cors-policy-in-angular7
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+            // If running without Docker, create folder AccountAPI/Resources/Images
             Directory.CreateDirectory("/app/Resources/Images");
             app.UseStaticFiles(new StaticFileOptions 
             {
@@ -114,7 +116,7 @@ namespace AccountAPI
 
             Data.Utility.UpdateDatabase(app);
             //Initilize Rabbit Listener in ApplicationBuilderExtentions
-            app.UseRabbitListener();
+            //app.UseRabbitListener();
         }
     }
 }
