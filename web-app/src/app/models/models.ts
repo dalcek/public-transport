@@ -155,6 +155,66 @@ export class LineDTO {
    }
 }
 
+export class GeoLocation{
+   constructor(public latitude: number, public longitude: number){
+
+   }
+}
+
+export class Polyline{
+   path: GeoLocation[]
+   color: string
+   icon: any
+
+   constructor(path: GeoLocation[], color: string, icon: any){
+      this.path = path;
+      this.color = color;
+      this.icon = icon;
+   }
+
+   addLocation(location: GeoLocation){
+      this.path.push(location);
+   }
+}
+
+export class MarkerInfo{
+   iconUrl: string;
+   title: string;
+   label: string;
+   location: GeoLocation;
+   link: string;
+
+   constructor(location: GeoLocation, icon: string, title: string, label: string, link: string){
+      this.iconUrl = icon;
+      this.title = title;
+      this.label = label;
+      this.location = location;
+      this.link = link;
+   }
+}
+
+export class CoordinateDTO {
+   XCoordinate: number;
+   YCoordinate: number;
+
+   constructor (xCoordinate: number, yCoordinate: number) {
+      this.XCoordinate = xCoordinate;
+      this.YCoordinate = yCoordinate;
+   }
+}
+
+export class AddLineDTO {
+   Name: string;
+   Type: string;
+   Coordinates: CoordinateDTO[];
+
+   constructor (name: string, type: string, coords: CoordinateDTO[]) {
+      this.Name = name;
+      this.Type = type;
+      this.Coordinates = coords;
+   }
+}
+
 export class ServiceResponse<T> {
   Data: T;
   Success: Boolean;

@@ -1,0 +1,101 @@
+<body>
+   <br><br><br>
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-9 col-md-7 col-lg-12 mx-auto">
+            <div class="card card-signin my-5">
+               <div class="card-body">
+                  <div class="row">
+                     <div class="col-md-4 col-lg-3">
+                        <nav>
+                           <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-station" role="tab" aria-controls="nav-home" (click)="onStationTab()" aria-selected="true">Stations</a>
+                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-line" role="tab" aria-controls="nav-profile" (click)="onLineTab()" aria-selected="false">Lines</a>
+                           </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                           <div class="tab-pane fade show active" id="nav-station" role="tabpanel"  aria-labelledby="nav-home-tab">
+                              <form class="form-signin" [formGroup]="stationForm">
+                                 <br><br>
+                                 <div class="form-label-group">
+                                    <input name="name" type="text" class="form-control" placeholder="Name" formControlName="name">
+                                 </div>
+                                 <div class="form-label-group">
+                                    <input name="address" type="text" class="form-control" placeholder="Address" formControlName="address">
+                                 </div>
+                                 <div class="form-label-group">
+                                    <input name="xCoordinate" type="number" class="form-control" placeholder="X Coordinate" formControlName="xCoordinate">
+                                 </div>
+                                 <div class="form-label-group">
+                                    <input name="yCoordinate" type="number" class="form-control" placeholder="Y Coordinate" formControlName="yCoordinate">
+                                 </div>
+                                 <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="addStation()">Add Station</button>
+                              </form>
+                           </div>
+                           <div class="tab-pane fade" id="nav-line" role="tabpanel" aria-labelledby="nav-profile-tab">
+                              <form class="form-signin" [formGroup]="lineForm">
+                                 <br>
+                                 <label>Select Add line and click on the map make a route</label>
+                                 <div class="form-label-group">
+                                    <select id="selectLabel" formControlName="selectLine" class="form-control" (change)="onSelect($event)">
+                                       <option value="choose">Choose a line to show</option>
+                                       <option value="add">Add line</option>
+                                       <option *ngFor="let item of lines" value="{{item['id']}}">{{item['name']}}</option>
+                                    </select>
+                                 </div>
+                                 <div class="form-label-group">
+                                    <input name="name" type="text" class="form-control" placeholder="Name" formControlName="name">
+                                 </div>
+                                 <div class="form-label-group">
+                                    <select id="selectLabel" formControlName="type" class="form-control">
+                                       <option value="City">City</option>
+                                       <option value="Suburban">Suburban</option>
+                                    </select>
+                                 </div>
+                                 <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="addLine()">save</button>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-3 col-lg-9">
+                        <div class="form-label-group">
+                        </div>
+                        <agm-map *ngIf="markerInfo.location.longitude" (mapClick)="placeMarker($event)"  [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" [zoom]="12" >
+                           <div>
+                             <agm-marker *ngFor="let station of stationsToShow" [latitude]="station['xCoordinate']" [longitude]="station['yCoordinate']" [title]="station.Name" [label]="">
+                               <agm-info-window>
+                                 Name: {{station['name']}}
+                                 <br>
+                                 Latitude: {{station['xCoordinate']}}
+                                 <br>
+                                 Longitude: {{station['yCoordinate']}}
+                                 <br>
+                                 Address: {{station['address']}}
+                               </agm-info-window>
+                             </agm-marker>
+                           </div>
+                           <div>
+                              <agm-polyline>
+                                <agm-polyline-point *ngFor="let point of lineCoords" [latitude]="point.xCoordinate" [longitude]="point.yCoordinate">
+                                </agm-polyline-point>
+                              </agm-polyline>
+                           </div>
+                           <div>
+                              <agm-polyline>
+                                <agm-polyline-point *ngFor="let dot of newLineCoords" [latitude]="dot['XCoordinate']" [longitude]="dot['YCoordinate']">
+                                </agm-polyline-point>
+                              </agm-polyline>
+                           </div>
+                         </agm-map>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div> 
+</body> 
+    
+   
+   
+     

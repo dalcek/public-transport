@@ -79,7 +79,7 @@ export class AdminTimetableComponent implements OnInit {
    }
 
    getDepartures() {
-      this.routeService.getDepartures(this.timetableForm.controls.dayType.value, this.timetableForm.controls.lineType.value, this.lineId).subscribe(
+      this.routeService.getDepartures(this.timetableForm.controls.dayType.value, this.lineId).subscribe(
          result => {
             this.departures = result.data.departures;
             this.timetableId = result.data.timetableId;

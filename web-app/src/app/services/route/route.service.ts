@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AddDepartureDTO, AddStationDTO, LineDTO } from 'src/app/models/models';
+import { AddDepartureDTO, AddLineDTO, AddStationDTO, LineDTO } from 'src/app/models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -50,8 +50,8 @@ export class RouteService {
       }));
    }
 
-   getDepartures(dayType: string, lineType: string, lineId: number): Observable<any> {
-      return this.http.get(`${this.baseUrl}/route/getDepartures?dayType=${dayType}&lineType=${lineType}&lineId=${lineId}`)
+   getDepartures(dayType: string, lineId: number): Observable<any> {
+      return this.http.get(`${this.baseUrl}/route/getDepartures?dayType=${dayType}&lineId=${lineId}`)
       .pipe(catchError(err => {
          console.log('Error in get departures service');
          console.error(err);
@@ -108,6 +108,24 @@ export class RouteService {
       return this.http.get(`${this.baseUrl}/route/getLines`)
       .pipe(catchError(err => {
          console.log('Error in get lines service');
+         console.error(err);
+         return throwError(err);
+      }));
+   }
+
+   getLineRoute(id: number): Observable<any> {
+      return this.http.get(`${this.baseUrl}/route/getLineRoute?id=${id}`)
+      .pipe(catchError(err => {
+         console.log('Error in get line route service');
+         console.error(err);
+         return throwError(err);
+      }));
+   }
+
+   addLine(line: AddLineDTO): Observable<any> {
+      return this.http.post(`${this.baseUrl}/route/addLine`, line)
+      .pipe(catchError(err => {
+         console.log('Error in add line service');
          console.error(err);
          return throwError(err);
       }));

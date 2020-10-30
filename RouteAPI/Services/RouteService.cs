@@ -194,16 +194,37 @@ namespace RouteAPI.Services
          return response;
       }
 
+      public async Task<ServiceResponse<List<CoordinateDTO>>> GetLineRoute(int id)
+      {
+         ServiceResponse<List<CoordinateDTO>> response = new ServiceResponse<List<CoordinateDTO>>();
+         List<CoordinateDTO> coordsDTO = new List<CoordinateDTO>();
+
+         try
+         {
+            List<Coordinate> coordinates = await _context.Coordinates.Where(c => c.LineId == id).ToListAsync();
+            foreach (var coord in coordinates)
+            {
+               coordsDTO.Add(new CoordinateDTO{ XCoordinate = coord.XCoordinate, YCoordinate = coord.YCoordinate });
+            }
+            response.Data = coordsDTO;
+         }
+         catch (Exception e) {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
       public async Task<ServiceResponse<List<LineDTO>>> GetLines()
       {
          ServiceResponse<List<LineDTO>> response = new ServiceResponse<List<LineDTO>>();
          List<LineDTO> lineDTOs = new List<LineDTO>();
-         LineDTO lineDTO = new LineDTO();
          try
          {
             List<Line> lines = await _context.Lines.Include(l => l.LineStations).ToListAsync();
             foreach (var line in lines)
             {
+               LineDTO lineDTO = new LineDTO();
                lineDTO.Id = line.Id;
                lineDTO.Name = line.Name;
                lineDTO.Type = line.Type.ToString();
@@ -215,6 +236,32 @@ namespace RouteAPI.Services
                lineDTOs.Add(lineDTO);
             }
             response.Data = lineDTOs;
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
+
+      public async Task<ServiceResponse<string>> AddLine(AddLineDTO newLine)
+      {
+         ServiceResponse<string> response = new ServiceResponse<string>();
+         Enums.LineType type = (Enums.LineType) Enum.Parse(typeof(Enums.LineType), newLine.Type);
+         List<Coordinate> coords = new List<Coordinate>();
+         try
+         {
+            Line line = new Line{ Name = newLine.Name, Type = type };
+            await _context.Lines.AddAsync(line);
+            await _context.SaveChangesAsync();
+            foreach (CoordinateDTO coord in newLine.Coordinates)
+            {
+               coords.Add(new Coordinate{LineId = line.Id, XCoordinate = coord.XCoordinate, YCoordinate = coord.YCoordinate});
+            }
+            await _context.Coordinates.AddRangeAsync(coords);
+            await _context.SaveChangesAsync();
+            response.Data = line.Name;
          }
          catch (Exception e)
          {

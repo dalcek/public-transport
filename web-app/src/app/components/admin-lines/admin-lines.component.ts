@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LineDTO, Station, StationDTO } from 'src/app/models/models';
+import { LineDTO, StationDTO } from 'src/app/models/models';
 import { RouteService } from 'src/app/services/route/route.service';
 
 @Component({
@@ -33,6 +33,7 @@ export class AdminLinesComponent implements OnInit {
    getLines() {
       this.routeService.getLines().subscribe(
          result => {
+            console.log(result);
             this.lines = result.data;
          },
          err => {

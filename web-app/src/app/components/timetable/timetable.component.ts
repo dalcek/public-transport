@@ -53,7 +53,7 @@ export class TimetableComponent implements OnInit {
       console.log(event.target.value);
       if (event.target.value != 'Choose line')
       {
-         this.routeService.getDepartures(this.timetableForm.controls.dayType.value, this.timetableForm.controls.lineType.value, event.target.value).subscribe(
+         this.routeService.getDepartures(this.timetableForm.controls.dayType.value, event.target.value).subscribe(
             result => {
                this.departures = result.data.departures;
                console.log(this.departures);

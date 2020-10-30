@@ -17,6 +17,8 @@ namespace RouteAPI.Services
       Task<ServiceResponse<List<Station>>> DeleteStation(int id);
       Task<ServiceResponse<List<LineDTO>>> GetLines();
       Task<ServiceResponse<List<LineNameDTO>>> GetLineNames(string dayType, string lineType);
+      Task<ServiceResponse<List<CoordinateDTO>>> GetLineRoute(int id);
+      Task<ServiceResponse<string>> AddLine(AddLineDTO newLine);
       Task<ServiceResponse<List<LineDTO>>> UpdateLine(LineDTO newLine);
       Task<ServiceResponse<int>> DeleteLine(int id);
    }

@@ -20,6 +20,8 @@ import { AdminStationsComponent } from './components/admin-stations/admin-statio
 import { AdminLinesComponent } from './components/admin-lines/admin-lines.component';
 import { ControllerTicketComponent } from './components/controller-ticket/controller-ticket.component';
 import { ControllerUserComponent } from './components/controller-user/controller-user.component';
+import { AdminMapComponent } from './components/admin-map/admin-map.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { ControllerUserComponent } from './components/controller-user/controller
     AdminStationsComponent,
     AdminLinesComponent,
     ControllerTicketComponent,
-    ControllerUserComponent
+    ControllerUserComponent,
+    AdminMapComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { ControllerUserComponent } from './components/controller-user/controller
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

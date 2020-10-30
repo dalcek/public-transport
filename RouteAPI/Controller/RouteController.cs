@@ -21,8 +21,8 @@ namespace RouteAPI.Controller
       // TODO: Remove AllowAnonymous tags
       [AllowAnonymous]
       [HttpGet("getDepartures")]
-      public async Task<IActionResult> GetDepartures(string dayType, string lineType, int lineId)
-      {  //Remove the lineType argument
+      public async Task<IActionResult> GetDepartures(string dayType, int lineId)
+      {  
          ServiceResponse<GetDeparturesDTO> response = await _routeService.GetDepartures(dayType, lineId);
          if (!response.Success)
          {
@@ -143,6 +143,30 @@ namespace RouteAPI.Controller
       public async Task<IActionResult> GetLines()
       {
          ServiceResponse<List<LineDTO>> response = await _routeService.GetLines();
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
+      }
+
+      [AllowAnonymous]
+      [HttpGet("getLineRoute")]
+      public async Task<IActionResult> GetLineRoute(int id)
+      {
+         ServiceResponse<List<CoordinateDTO>> response = await _routeService.GetLineRoute(id);
+         if (!response.Success)
+         {
+            return BadRequest(response);
+         }
+         return Ok(response);
+      }
+
+      [AllowAnonymous]
+      [HttpPost("addLine")]
+      public async Task<IActionResult> AddLine(AddLineDTO request)
+      {
+         ServiceResponse<string> response = await _routeService.AddLine(request);
          if (!response.Success)
          {
             return BadRequest(response);
