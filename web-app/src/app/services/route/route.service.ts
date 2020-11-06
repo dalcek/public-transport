@@ -9,7 +9,7 @@ import { AddDepartureDTO, AddLineDTO, AddStationDTO, LineDTO } from 'src/app/mod
 })
 export class RouteService {
 
-   baseUrl: string = 'http://localhost:5000';
+   baseUrl: string = 'http://localhost:6004';
 
    constructor(private http: HttpClient) { }
 

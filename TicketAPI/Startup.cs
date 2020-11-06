@@ -51,6 +51,7 @@ namespace TicketAPI
                 };
             });
          services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+         
          services.AddSingleton<RabbitMQ.IRabbitMQConnection>(sp =>
          {
             var factory = new ConnectionFactory()

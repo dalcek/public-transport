@@ -1,40 +1,64 @@
 version: '3'
 services:
   rabbitmq:
+    restart: always
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
       - 5672:5672
       - 15672:15672
   accountdb:
+    restart: always
     image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: accountdb
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "NikolinAccount9!"
     ports:
-      - "1433:1433"
+      - "1434:1433"
     depends_on: 
       - rabbitmq
   ticketdb:
+    restart: always
     image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: ticketdb
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "NikolinPassword9!"
+      SA_PASSWORD: "NikolinTicket9!"
     ports:
-      - "1434:1433"
+      - "1435:1433"
     depends_on: 
       - rabbitmq
+  routedb:
+    restart: always
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: routedb
+    depends_on:
+      - rabbitmq
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "NikolinRoute9!"
+    ports:
+      - "1436:1433"
   paymentdb:
+    restart: always
     image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: paymentdb
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "NikolinPayment9!"
     ports:
-      - "1435:1433"
+      - "1437:1433"
+  locationdb:
+    restart: always
+    image: mongo
+    container_name: locationdb
+    depends_on:
+      - rabbitmq
+    ports:
+      - "1438:27017"
   account:
+    restart: always
     container_name: account
     build:
       dockerfile: Dockerfile
@@ -44,6 +68,7 @@ services:
     depends_on:
       - accountdb
   ticket:
+    restart: always
     container_name: ticket
     build:
       dockerfile: Dockerfile
@@ -53,6 +78,7 @@ services:
     depends_on: 
       - ticketdb
   payment:
+    restart: always
     container_name: payment
     build:
       dockerfile: Dockerfile
@@ -61,3 +87,26 @@ services:
       - 6003:80
     depends_on: 
       - paymentdb
+  route:
+    restart: always
+    container_name: route
+    build:
+      dockerfile: Dockerfile
+      context: ./RouteAPI
+    ports:
+      - 6004:80
+    depends_on: 
+      - routedb
+  location:
+    restart: always
+    container_name: location
+    depends_on:
+      - locationdb
+      - rabbitmq
+      - route
+    build:
+      dockerfile: Dockerfile
+      context: './LocationAPI'
+    ports:
+      - "6005:6005"
+      - "3000:3000"

@@ -9,7 +9,7 @@ using TicketAPI.Services;
 
 namespace TicketAPI.Controllers
 {
-   [Authorize(Roles = "Admin")]
+   [Authorize]
    [Route("[controller]")]
    [ApiController]
    public class TicketController : ControllerBase
@@ -27,7 +27,7 @@ namespace TicketAPI.Controllers
       {
          return Ok("test");
       }
-
+      [Authorize(Roles = "Admin")]
       [HttpGet("getPricelist")]
       public async Task<IActionResult> GetPricelist()
       {
@@ -38,7 +38,7 @@ namespace TicketAPI.Controllers
          }
          return Ok(response);
       }
-
+      [Authorize(Roles = "Admin")]
       [HttpPut("editPricelist")]
       public async Task<IActionResult> UpdatePricelist(PricelistDTO request)
       {
@@ -49,7 +49,7 @@ namespace TicketAPI.Controllers
          }
          return Ok(response);
       }
-
+      [Authorize(Roles = "Admin")]
       [HttpPost("createPricelist")]
       public async Task<IActionResult> CreatePricelist(PricelistDTO request)
       {
@@ -117,7 +117,7 @@ namespace TicketAPI.Controllers
          return Ok(response);
       }
 
-      [AllowAnonymous]
+      [Authorize(Roles = "Controller")]
       [HttpGet("validate")]
       public async Task<IActionResult> Validate(int id)
       {

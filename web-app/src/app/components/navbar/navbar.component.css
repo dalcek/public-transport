@@ -42,8 +42,6 @@ img {
   color: #D3AC2B;
 }
 
-
-
 @media (min-width: 500px) {
   #mainNav {
     padding-top: 0px;
@@ -63,5 +61,4 @@ img {
     padding-bottom: 0;
     background-color: #212529;
   }
-
 }

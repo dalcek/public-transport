@@ -9,6 +9,7 @@ import { BuyATicketComponent } from './components/buy-a-ticket/buy-a-ticket.comp
 import { ControllerTicketComponent } from './components/controller-ticket/controller-ticket.component';
 import { ControllerUserComponent } from './components/controller-user/controller-user.component';
 import { LoginComponent } from './components/login/login.component';
+import { MapComponent } from './components/map/map.component';
 import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -43,6 +44,10 @@ const routes: Routes = [{
 {
    path: 'timetable',
    component: TimetableComponent
+},
+{
+   path: 'map',
+   component: MapComponent
 },
 {
   path: 'admin-pricelist',

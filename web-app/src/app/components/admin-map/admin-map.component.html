@@ -62,7 +62,7 @@
                         </div>
                         <agm-map *ngIf="markerInfo.location.longitude" (mapClick)="placeMarker($event)"  [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" [zoom]="12" >
                            <div>
-                             <agm-marker *ngFor="let station of stationsToShow" [latitude]="station['xCoordinate']" [longitude]="station['yCoordinate']" [title]="station.Name" [label]="">
+                             <agm-marker *ngFor="let station of stationsToShow" [latitude]="station['xCoordinate']" [longitude]="station['yCoordinate']" [title]="station.Name" [iconUrl]="markerInfo.iconUrl" [label]="">
                                <agm-info-window>
                                  Name: {{station['name']}}
                                  <br>

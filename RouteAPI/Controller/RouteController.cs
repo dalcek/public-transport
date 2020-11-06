@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using RouteAPI.Services;
 
 namespace RouteAPI.Controller
 {
-   [Authorize]
+   [Authorize(Roles = "Admin")]
    [Route("[controller]")]
    [ApiController]
    public class RouteController : ControllerBase
@@ -17,6 +18,27 @@ namespace RouteAPI.Controller
       public RouteController(IRouteService routeService)
       {
          _routeService = routeService;
+      }
+
+      [AllowAnonymous]
+      [HttpGet("test")]
+      public IActionResult Test()
+      {  
+         //ServiceResponse<string> response = new ServiceResponse<string>();
+         //response.Data = "hi from route api";
+         //Newtonsoft.Json.JsonConvert.SerializeObject(response);
+         //return Ok("{\"word\": \"cao route\"}");
+         List<Coordinate> list = new List<Coordinate>();
+         list.Add(new Coordinate{ LineId = 1, XCoordinate = 45.3213124, YCoordinate = 19.124142});
+         list.Add(new Coordinate{ LineId = 1, XCoordinate = 45.35141, YCoordinate = 19.55});
+         list.Add(new Coordinate{ LineId = 2, XCoordinate = 45.3213787124, YCoordinate = 19.12416542});
+         list.Add(new Coordinate{ LineId = 1, XCoordinate = 45.87687, YCoordinate = 19.87});
+
+         ServiceResponse<List<Coordinate>> tmp = new ServiceResponse<List<Coordinate>>();
+         tmp.Data = list;
+         string response = JsonSerializer.Serialize(tmp);
+         return Ok(response);
+         //return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(response));
       }
       // TODO: Remove AllowAnonymous tags
       [AllowAnonymous]
@@ -31,7 +53,7 @@ namespace RouteAPI.Controller
          return Ok(response);
       }
 
-      [AllowAnonymous]
+      [Authorize(Roles = "Admin")]
       [HttpPost("addDeparture")]
       public async Task<IActionResult> AddDeparture(AddDepartureDTO request)
       {
@@ -43,7 +65,6 @@ namespace RouteAPI.Controller
          return Ok(response);
       }
 
-      [AllowAnonymous]
       [HttpPut("editDeparture")]
       public async Task<IActionResult> UpdateDeparture(AddDepartureDTO request)
       {
@@ -55,7 +76,6 @@ namespace RouteAPI.Controller
          return Ok(response);
       }
 
-      [AllowAnonymous]
       [HttpDelete("deleteDeparture")]
       public async Task<IActionResult> DeleteDeparture(int id)
       {
@@ -103,7 +123,6 @@ namespace RouteAPI.Controller
          return Ok(response);
       }
 
-      [AllowAnonymous]
       [HttpPost("addStation")]
       public async Task<IActionResult> AddStation(AddStationDTO request)
       {
@@ -114,7 +133,7 @@ namespace RouteAPI.Controller
          }
          return Ok(response);
       }
-      [AllowAnonymous]
+
       [HttpPut("editStation")]
       public async Task<IActionResult> EditStation(Station request)
       {
@@ -126,7 +145,6 @@ namespace RouteAPI.Controller
          return Ok(response);
       }
 
-      [AllowAnonymous]
       [HttpDelete("deleteStation")]
       public async Task<IActionResult> DeleteStation(int id)
       {
@@ -162,7 +180,6 @@ namespace RouteAPI.Controller
          return Ok(response);
       }
 
-      [AllowAnonymous]
       [HttpPost("addLine")]
       public async Task<IActionResult> AddLine(AddLineDTO request)
       {
@@ -174,7 +191,6 @@ namespace RouteAPI.Controller
          return Ok(response);
       }
 
-      [AllowAnonymous]
       [HttpPut("editLine")]
       public async Task<IActionResult> UpdateLine(LineDTO request)
       {
@@ -186,7 +202,6 @@ namespace RouteAPI.Controller
          return Ok(response);
       }
 
-      [AllowAnonymous]
       [HttpDelete("deleteLine")]
       public async Task<IActionResult> DeleteLine(int id)
       {

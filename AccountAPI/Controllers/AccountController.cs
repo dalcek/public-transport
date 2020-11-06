@@ -99,7 +99,7 @@ namespace AccountAPI.Controllers
          }
          return Ok(response);
       }
-      [AllowAnonymous]
+      [Authorize(Roles = "Controller")]
       [HttpGet("getUnvalidatedUsers")]
       public async Task<IActionResult> GetUnvalidatedUsers()
       {
@@ -111,7 +111,7 @@ namespace AccountAPI.Controllers
          return Ok(response);
       }
 
-      [AllowAnonymous]
+      [Authorize(Roles = "Controller")]
       [HttpGet("validate")]
       public async Task<IActionResult> Validate(string email, bool accepted)
       {

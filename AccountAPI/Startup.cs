@@ -63,7 +63,7 @@ namespace AccountAPI
                o.MultipartBodyLengthLimit = int.MaxValue;
                o.MemoryBufferThreshold = int.MaxValue;
             });
-            /*
+            
             services.AddSingleton<IRabbitMQConnection>(sp =>
             {
                var factory = new ConnectionFactory()
@@ -80,7 +80,7 @@ namespace AccountAPI
             });
 
             services.AddSingleton<RpcServer>();
-            */
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,7 +116,7 @@ namespace AccountAPI
 
             Data.Utility.UpdateDatabase(app);
             //Initilize Rabbit Listener in ApplicationBuilderExtentions
-            //app.UseRabbitListener();
+            app.UseRabbitListener();
         }
     }
 }

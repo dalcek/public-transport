@@ -38,29 +38,27 @@ export class AdminMapComponent implements OnInit {
    currentTab: string = 'stations';
 
    markerIcon: string = "../../../../markericon.png";
-   markerInfo: MarkerInfo = new MarkerInfo(new GeoLocation(45.251302, 19.810568),
-   "../../../../reg_img.png",
-   "Jugodrvo", "", "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka");
+   markerInfo: MarkerInfo;
 
    constructor(private formBuilder: FormBuilder, private routeService: RouteService) { }
 
    ngOnInit(): void {
+      this.markerInfo = new MarkerInfo(new GeoLocation(45.251302, 19.810568),
+      "../../../assets/markericon.png",
+      "Jugodrvo", "", "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka");
       this.getStations();
       this.getLines();
    }
 
 
    placeMarker($event) {
-      console.log($event);
-      
       if (this.currentTab == 'stations') {
          this.stationForm.controls.xCoordinate.setValue($event.coords.lat);
          this.stationForm.controls.yCoordinate.setValue($event.coords.lng);
       }
       else if (this.lineForm.controls.selectLine.value == 'add'){
-         console.log('linecoords');
-         console.log(this.newLineCoords);
          this.newLineCoords.push(new CoordinateDTO(parseFloat($event.coords.lat), parseFloat($event.coords.lng)));
+         console.log(parseFloat($event.coords.lat) + ' ' + parseFloat($event.coords.lng))
       }
    }
 
@@ -94,7 +92,6 @@ export class AdminMapComponent implements OnInit {
       if (event.target.value != 'choose' && event.target.value != 'add') {
          this.lineId = parseInt(event.target.value);
          this.getLineRoute();
-         console.log(this.lineCoords);
          for (let i = 0; i < this.lines.length; i++) {
             if (this.lines[i]['id'] == this.lineId) {
                this.selectedLine = this.lines[i];

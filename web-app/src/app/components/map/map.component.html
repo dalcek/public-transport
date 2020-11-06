@@ -1,0 +1,50 @@
+<body>
+   <br><br><br>
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-9 col-md-7 col-lg-9 mx-auto">
+            <div class="card card-signin my-5">
+               <div class="card-body">
+                  <div class="row">
+                     <form class="form-signin" [formGroup]="lineForm">
+                        <div class="form-label-group">
+                           <select id="selectLabel" formControlName="selectLine"  (change)="onSelect($event)">
+                              <option value="choose">Choose a line to show</option>
+                              <option *ngFor="let item of lines" value="{{item['id']}}">{{item['name']}}</option>
+                           </select>
+                        </div>
+                     </form>
+                     <agm-map *ngIf="markerInfo.location.longitude" [latitude]="markerInfo.location.latitude" [longitude]="markerInfo.location.longitude" [zoom]="12" >
+                        <div>
+                           <agm-marker *ngFor="let station of stationsToShow" [latitude]="station['xCoordinate']" [longitude]="station['yCoordinate']" [title]="station.Name" [iconUrl]="markerIconUrl" [label]="">
+                              <agm-info-window>
+                              Name: {{station['name']}}
+                              <br>
+                              Latitude: {{station['xCoordinate']}}
+                              <br>
+                              Longitude: {{station['yCoordinate']}}
+                              <br>
+                              Address: {{station['address']}}
+                              </agm-info-window>
+                           </agm-marker>
+                        </div>
+                        <agm-polyline>
+                           <agm-polyline-point *ngFor="let point of lineCoords" [latitude]="point.xCoordinate" [longitude]="point.yCoordinate">
+                           </agm-polyline-point>
+                        </agm-polyline>
+                        <agm-marker *ngIf="busLocation.latitude != -1 && showBus" [latitude]="busLocation.latitude" [longitude]="busLocation.longitude" [label]="" [iconUrl]="busIconUrl">
+                        </agm-marker>
+                     </agm-map>
+                     <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="ngOnDestroy()">stop</button>
+                     <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="location()">start</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div> 
+</body> 
+    
+   
+   
+     

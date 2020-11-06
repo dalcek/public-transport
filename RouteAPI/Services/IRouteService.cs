@@ -21,5 +21,6 @@ namespace RouteAPI.Services
       Task<ServiceResponse<string>> AddLine(AddLineDTO newLine);
       Task<ServiceResponse<List<LineDTO>>> UpdateLine(LineDTO newLine);
       Task<ServiceResponse<int>> DeleteLine(int id);
+      ServiceResponse<List<Coordinate>> GetCoordinates();
    }
 }

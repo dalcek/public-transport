@@ -68,61 +68,61 @@ namespace RouteAPI.Data
          );
 
          modelBuilder.Entity<Coordinate>().HasData(
-            new Coordinate
+            new Coordinate    
             {
                Id = 1,
                XCoordinate = 45.248883, 
                YCoordinate = 19.791697,
-               LineId = 1,
+               LineId = 1
             },
             new Coordinate
             {
                Id = 2,
                XCoordinate = 45.253170,
                YCoordinate = 19.804232,      
-               LineId = 1,
+               LineId = 1
             },
             new Coordinate
             {
                Id = 3,
                XCoordinate = 45.248805, 
                YCoordinate = 19.807177,
-               LineId = 1,
+               LineId = 1
             },
             new Coordinate
             {
                Id = 4,
                XCoordinate = 45.247569, 
                YCoordinate = 19.807628,
-               LineId = 1,
+               LineId = 1
             },
             new Coordinate
             {
                Id = 5,
                XCoordinate = 45.248597, 
                YCoordinate = 19.816578,
-               LineId = 1,
+               LineId = 1
             },
             new Coordinate
             {
                Id = 6,
                XCoordinate = 45.249367, 
                YCoordinate = 19.822073,
-               LineId = 1,
+               LineId = 1
             },
             new Coordinate
             {
                Id = 7,
                XCoordinate = 45.249140,  
                YCoordinate = 19.830935,
-               LineId = 1,
+               LineId = 1
             },
             new Coordinate
             {
                Id = 8,
                XCoordinate = 45.254322, 
                YCoordinate = 19.842608,
-               LineId = 1,
+               LineId = 1
             },
             new Coordinate
             {

@@ -12,7 +12,6 @@ namespace TicketAPI.RabbitMQClient
    public class RpcClient
    {
       private const string QUEUE_NAME = "rpc_queue";
-      //private readonly IConnection _connection;
       private readonly IRabbitMQConnection _connection;
       private readonly IModel channel;
       private readonly string replyQueueName;

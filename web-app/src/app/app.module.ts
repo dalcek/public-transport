@@ -22,6 +22,11 @@ import { ControllerTicketComponent } from './components/controller-ticket/contro
 import { ControllerUserComponent } from './components/controller-user/controller-user.component';
 import { AdminMapComponent } from './components/admin-map/admin-map.component';
 import { AgmCoreModule } from '@agm/core';
+import { MapComponent } from './components/map/map.component';
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -39,7 +44,8 @@ import { AgmCoreModule } from '@agm/core';
     AdminLinesComponent,
     ControllerTicketComponent,
     ControllerUserComponent,
-    AdminMapComponent
+    AdminMapComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +54,8 @@ import { AgmCoreModule } from '@agm/core';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPayPalModule,
-    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'}),
+    SocketIoModule.forRoot(config)
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

@@ -283,7 +283,15 @@ namespace TicketAPI.Services
 
          try
          {
-            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+            Ticket ticket = await _context.Tickets.Include(t => t.PricelistItem).ThenInclude(pi => pi.Item).FirstOrDefaultAsync(t => t.Id == id);
+
+            if (ticket == null)
+            {
+               response.Success = false;
+               response.Message = "Ticket with the given ID was not found.";
+               return response;
+            }
+
             if (ticket.PricelistItem.Item.TicketType == Enums.TicketType.HourTicket)
             {
                if ((DateTime.Now.Ticks - ticket.IssueTime.Ticks) < 36000000000)

@@ -441,5 +441,25 @@ namespace RouteAPI.Services
          }
          return response;
       }
+
+      public ServiceResponse<List<Coordinate>> GetCoordinates()
+      {
+         ServiceResponse<List<Coordinate>> response = new ServiceResponse<List<Coordinate>>();
+
+         try
+         {
+            response.Data = _context.Coordinates.ToList();
+            foreach(var tmp in response.Data)
+            {
+               Console.WriteLine(tmp.XCoordinate + "     " + tmp.YCoordinate);
+            }
+         }
+         catch (Exception e)
+         {
+            response.Success = false;
+            response.Message = e.Message;
+         }
+         return response;
+      }
    }
 }
