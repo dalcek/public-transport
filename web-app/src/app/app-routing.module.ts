@@ -14,6 +14,10 @@ import { PricelistComponent } from './components/pricelist/pricelist.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TimetableComponent } from './components/timetable/timetable.component';
+import { AdminGuard } from './guards/admin.guard';
+import { ControllerGuard } from './guards/controller.guard';
+import { LoggedInGuard } from './guards/logged-in.guard';
+import { VisitorGuard } from './guards/visitor.guard';
 
 
 const routes: Routes = [{
@@ -31,7 +35,8 @@ const routes: Routes = [{
 },
 {
   path: 'profile',
-  component: ProfileComponent
+  component: ProfileComponent,
+  canActivate: [LoggedInGuard]
 },
 {
   path: 'pricelist',
@@ -39,7 +44,8 @@ const routes: Routes = [{
 },
 {
   path: 'buy-a-ticket',
-  component: BuyATicketComponent
+  component: BuyATicketComponent,
+  canActivate: [VisitorGuard]
 },
 {
    path: 'timetable',
@@ -51,31 +57,38 @@ const routes: Routes = [{
 },
 {
   path: 'admin-pricelist',
-  component: AdminPricelistComponent
+  component: AdminPricelistComponent,
+  canActivate: [AdminGuard]
 },
 {
    path: 'admin-timetable',
-   component: AdminTimetableComponent
+   component: AdminTimetableComponent,
+   canActivate: [AdminGuard]
 },
 {
    path: 'admin-stations',
-   component: AdminStationsComponent
+   component: AdminStationsComponent,
+   canActivate: [AdminGuard]
 },
 {
    path: 'admin-lines',
-   component: AdminLinesComponent
+   component: AdminLinesComponent,
+   canActivate: [AdminGuard]
 },
 {
    path: 'admin-map',
-   component: AdminMapComponent
+   component: AdminMapComponent,
+   canActivate: [AdminGuard]
 },
 {
    path: 'controller-ticket',
-   component: ControllerTicketComponent
+   component: ControllerTicketComponent,
+   canActivate: [ControllerGuard]
 },
 {
    path: 'controller-user',
-   component: ControllerUserComponent
+   component: ControllerUserComponent,
+   canActivate: [ControllerGuard]
 }
 ];
 

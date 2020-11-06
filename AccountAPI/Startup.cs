@@ -113,10 +113,12 @@ namespace AccountAPI
             {
                 endpoints.MapControllers();
             });
-
-            Data.Utility.UpdateDatabase(app);
+            Data.Utility.Do(() => Data.Utility.UpdateDatabase(app), TimeSpan.FromSeconds(40), 5); 
+            Data.Utility.Do(() => app.UseRabbitListener(), TimeSpan.FromSeconds(40), 5); 
+            
+            //Data.Utility.UpdateDatabase(app);
             //Initilize Rabbit Listener in ApplicationBuilderExtentions
-            app.UseRabbitListener();
+            //app.UseRabbitListener();
         }
     }
 }

@@ -87,7 +87,7 @@ namespace AccountAPI.Controllers
          }
          return Ok(response);
       }
-
+      [AllowAnonymous]
       [HttpPost("uploadImage"), DisableRequestSizeLimit]
       public async Task<IActionResult> UploadImage()
       {

@@ -320,6 +320,14 @@ namespace AccountAPI.Services
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
             response.Data = email;
+            if (accepted)
+            {
+               Data.Utility.SendEmail(email, "Account validation", "Your account is accepted.");
+            }
+            else
+            {
+               Data.Utility.SendEmail(email, "Account validation", "Your account is denied.");
+            }
          }
          catch (Exception e)
          {

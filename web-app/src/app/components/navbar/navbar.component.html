@@ -25,25 +25,25 @@
             <a class="nav-link"  routerLink="/timetable" *ngIf="loggedIn==null || loggedIn=='AppUser'">Timetable</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  routerLink="/admin-timetable" *ngIf="loggedIn==null || loggedIn=='AppUser'">ATimetable</a>
+            <a class="nav-link"  routerLink="/admin-timetable" *ngIf="loggedIn=='Admin'">Timetable</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  routerLink="/admin-stations" *ngIf="loggedIn==null || loggedIn=='AppUser'">stations</a>
+            <a class="nav-link"  routerLink="/admin-stations" *ngIf="loggedIn=='Admin'">Stations</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  routerLink="/admin-lines" *ngIf="loggedIn==null || loggedIn=='AppUser'">lines</a>
+            <a class="nav-link"  routerLink="/admin-lines" *ngIf="loggedIn=='Admin'">Lines</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  routerLink="/admin-map" *ngIf="loggedIn==null || loggedIn=='AppUser'">map</a>
+            <a class="nav-link"  routerLink="/admin-map" *ngIf="loggedIn=='Admin'">Map</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  routerLink="/map" *ngIf="loggedIn==null || loggedIn=='AppUser'">u map</a>
+            <a class="nav-link"  routerLink="/map" *ngIf="loggedIn==null || loggedIn=='AppUser'">Map</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  routerLink="/controller-ticket" *ngIf="loggedIn==null || loggedIn=='AppUser'">ticket</a>
+            <a class="nav-link"  routerLink="/controller-ticket" *ngIf="loggedIn=='Controller'">Ticket</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  routerLink="/controller-user" *ngIf="loggedIn==null || loggedIn=='AppUser'">user</a>
+            <a class="nav-link"  routerLink="/controller-user" *ngIf="loggedIn=='Controller'">User</a>
           </li>
           <li class="nav-item">
             <a class="nav-link"  routerLink="/profile" *ngIf="loggedIn!=null">Profile</a>
