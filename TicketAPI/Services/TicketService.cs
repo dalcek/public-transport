@@ -120,11 +120,15 @@ namespace TicketAPI.Services
             {
                // RPC call to account service to get user type
                var res = await _rpcClient.CallAsync(userId.ToString());
+               Console.WriteLine("test1");
                rpcResponse = System.Text.Json.JsonSerializer.Deserialize<ServiceResponse<int>>(res);
+               Console.WriteLine("test2");
                if (rpcResponse.Success)
                {
+                  Console.WriteLine("test3");
                   userType = (Enums.UserType) rpcResponse.Data;
                }
+               Console.WriteLine("test4");
             }
          }
          catch (Exception)

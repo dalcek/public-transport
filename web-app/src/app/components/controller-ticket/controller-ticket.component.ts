@@ -32,7 +32,12 @@ export class ControllerTicketComponent implements OnInit {
             }
          },
          err => {
-            console.log(err.error.message);
+            if (err.error.message == 'Ticket with the given ID was not found.') {
+               this.message = `Ticket with id ${this.validationForm.controls.id.value} was not found.`;
+            }
+            else {
+               console.log(err.error.message);
+            }
          }
       );
    }

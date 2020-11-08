@@ -56,6 +56,7 @@ export class TimetableComponent implements OnInit {
          this.routeService.getDepartures(this.timetableForm.controls.dayType.value, event.target.value).subscribe(
             result => {
                this.departures = result.data.departures;
+               this.departures.sort((a, b) => a.Time.localeCompare(b.Time));
                console.log(this.departures);
             },
             err => {

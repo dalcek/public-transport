@@ -111,7 +111,7 @@ namespace AccountAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+               endpoints.MapControllers();
             });
             Data.Utility.Do(() => Data.Utility.UpdateDatabase(app), TimeSpan.FromSeconds(40), 5); 
             Data.Utility.Do(() => app.UseRabbitListener(), TimeSpan.FromSeconds(40), 5); 

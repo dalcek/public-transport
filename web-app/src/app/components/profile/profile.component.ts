@@ -21,9 +21,9 @@ export class ProfileComponent implements OnInit {
     userType: ['', Validators.required],
     userStatus: ['', {disabled: true}],
     photo: ['']
-  });//, {validator: this.checkPassword});
+  });
 
-  //user: GetUserDTO = new GetUserDTO();
+  errorMessage: string;
   photoFile: any;
   photoChanged: boolean = false;
   photoPath: string;
@@ -34,63 +34,57 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.profileForm.get('userStatus').disable();
-    console.log(this.profileForm);
   }
 
-  submit() {
-    let user = new AddUserDTO(this.profileForm.controls.email.value, this.profileForm.controls.name.value,
-      this.profileForm.controls.lastName.value, this.profileForm.controls.dateOfBirth.value, this.profileForm.controls.userType.value, '');
-    console.log(user);
-    this.accountService.update(user).subscribe(
-      result => {
-        let user = result.data;
-        this.populate(user);
-        if (this.photoChanged) {
-          if (this.photoFile != null) {
-            let formData = new FormData();
-            formData.append('image', this.photoFile, this.photoFile.name);
-            formData.append('id', localStorage['id']);
-
-            this.accountService.uploadImage(formData).subscribe(
-              result => {
-                console.log(result.data);
-                this.photoPath = `http://localhost:6001/${result.data}`;
-                this.photoChanged = false;
-                this.photoFile = null;
-                location.reload();
-              },
-              err => {
-                console.log(err.error.message);
-                window.alert(err.error.message);
-              }
-            );
-          }
-        }
-      },
-      err => {
-        console.log(err.error.message);
-        window.alert(err.error.message);
+   submit() {
+      if (!this.validateForm()) {
+         return;
       }
-    );
-  }
+      this.errorMessage = '';
+      let user = new AddUserDTO(this.profileForm.controls.email.value, this.profileForm.controls.name.value,
+      this.profileForm.controls.lastName.value, this.profileForm.controls.dateOfBirth.value, this.profileForm.controls.userType.value, '');
+      this.accountService.update(user).subscribe(
+         result => {
+            let user = result.data;
+            this.populate(user);
+            if (this.photoChanged) {
+               if (this.photoFile != null) {
+                  let formData = new FormData();
+                  formData.append('image', this.photoFile, this.photoFile.name);
+                  formData.append('id', localStorage['id']);
 
-  onImageChange(event) {
-    this.photoFile = <File>event.target.files[0];
-    this.photoChanged = true;
-    this.photoMessage = this.photoFile.name;
-  }
+                  this.accountService.uploadImage(formData).subscribe(
+                  result => {
+                     console.log(result.data);
+                     this.photoPath = `http://localhost:6001/${result.data}`;
+                     this.photoChanged = false;
+                     this.photoFile = null;
+                     location.reload();
+                  },
+                  err => {
+                     console.log(err.error.message);
+                     window.alert(err.error.message);
+                  }
+                  );
+               }
+            }
+         },
+         err => {
+            console.log(err.error.message);
+            window.alert(err.error.message);
+         }
+      );
+   }
 
-  onSelect(event: any) {
-    //this.selectValue = event.target.value;
-  }
+   onImageChange(event) {
+      this.photoFile = <File>event.target.files[0];
+      this.photoChanged = true;
+      this.photoMessage = this.photoFile.name;
+   }
 
-  changePassword() {
-
-  }
-
-  deleteProfile() {
-
-  }
+   onSelect(event: any) {
+      //this.selectValue = event.target.value;
+   }
 
   getUser() {
     this.accountService.getUser().subscribe(
@@ -135,4 +129,32 @@ export class ProfileComponent implements OnInit {
       }
     }
   }
+
+  validateForm(): boolean{
+   if (this.profileForm.controls.name.errors) {
+     this.errorMessage = 'Name is required.';
+     return false;
+   }
+   else if (this.profileForm.controls.lastName.errors) {
+     this.errorMessage = 'Last name is required.';
+     return false;
+   }
+   else if (this.profileForm.controls.email.errors) {
+     console.log(JSON.stringify(this.profileForm.controls.email.errors));
+     if (JSON.stringify(this.profileForm.controls.email.errors).includes('required')) {
+       this.errorMessage = 'Email is required.';
+     }
+     else if (JSON.stringify(this.profileForm.controls.email.errors).includes('email')) {
+       this.errorMessage = 'Email format is invalid.';
+     }
+     return false;
+   }
+   else if (this.profileForm.controls.dateOfBirth.errors) {
+     console.log(this.profileForm.controls.dateOfBirth.errors);
+     this.errorMessage = 'Date of birth is required.';
+     return false;
+   }
+   return true;
+ }
+
 }

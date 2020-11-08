@@ -53,6 +53,7 @@ export class ControllerUserComponent implements OnInit {
    getUsers() {
       this.accountService.getUnvalidatedUsers().subscribe(
          result => {
+            console.log(result)
             this.users = result.data;
             this.userEmail = '';
             this.clearForm();
@@ -78,6 +79,7 @@ export class ControllerUserComponent implements OnInit {
             console.log(err.error.message);
          }
       );
+      this.photoPath = '';
    }
 
    deny() {
@@ -89,6 +91,7 @@ export class ControllerUserComponent implements OnInit {
             console.log(err.error.message);
          }
       );
+      this.photoPath = '';
    }
 
    onSelect(event: any) {
@@ -104,6 +107,7 @@ export class ControllerUserComponent implements OnInit {
                let fullDate = this.users[i]['dateOfBirth'].split(' ')[0].split('/');
                let formattedDate = `${fullDate[2]}-${fullDate[0]}-${fullDate[1]}`;
                this.profileForm.controls.dateOfBirth.setValue(formattedDate);
+               this.photoPath = `http://localhost:6001/${this.users[i]['photo']}`;
             }
          }
       }

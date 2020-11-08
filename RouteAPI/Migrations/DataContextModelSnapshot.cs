@@ -104,6 +104,139 @@ namespace RouteAPI.Migrations
                             LineId = 1,
                             XCoordinate = 45.254877,
                             YCoordinate = 19.841878999999999
+                        },
+                        new
+                        {
+                            Id = 10,
+                            LineId = 2,
+                            XCoordinate = 45.236991000000003,
+                            YCoordinate = 19.826449
+                        },
+                        new
+                        {
+                            Id = 11,
+                            LineId = 2,
+                            XCoordinate = 45.238233000000001,
+                            YCoordinate = 19.830770999999999
+                        },
+                        new
+                        {
+                            Id = 12,
+                            LineId = 2,
+                            XCoordinate = 45.239184999999999,
+                            YCoordinate = 19.834212999999998
+                        },
+                        new
+                        {
+                            Id = 13,
+                            LineId = 2,
+                            XCoordinate = 45.239604999999997,
+                            YCoordinate = 19.835805000000001
+                        },
+                        new
+                        {
+                            Id = 14,
+                            LineId = 2,
+                            XCoordinate = 45.241639999999997,
+                            YCoordinate = 19.842815999999999
+                        },
+                        new
+                        {
+                            Id = 15,
+                            LineId = 2,
+                            XCoordinate = 45.244140000000002,
+                            YCoordinate = 19.841380999999998
+                        },
+                        new
+                        {
+                            Id = 16,
+                            LineId = 2,
+                            XCoordinate = 45.246419000000003,
+                            YCoordinate = 19.840147999999999
+                        },
+                        new
+                        {
+                            Id = 17,
+                            LineId = 2,
+                            XCoordinate = 45.247973999999999,
+                            YCoordinate = 19.839265000000001
+                        },
+                        new
+                        {
+                            Id = 18,
+                            LineId = 2,
+                            XCoordinate = 45.24774,
+                            YCoordinate = 19.836482
+                        },
+                        new
+                        {
+                            Id = 19,
+                            LineId = 2,
+                            XCoordinate = 45.248657999999999,
+                            YCoordinate = 19.833655
+                        },
+                        new
+                        {
+                            Id = 20,
+                            LineId = 2,
+                            XCoordinate = 45.249699999999997,
+                            YCoordinate = 19.832616000000002
+                        },
+                        new
+                        {
+                            Id = 21,
+                            LineId = 2,
+                            XCoordinate = 45.249217999999999,
+                            YCoordinate = 19.830915999999998
+                        },
+                        new
+                        {
+                            Id = 22,
+                            LineId = 2,
+                            XCoordinate = 45.249294999999996,
+                            YCoordinate = 19.824555
+                        },
+                        new
+                        {
+                            Id = 23,
+                            LineId = 2,
+                            XCoordinate = 45.248145000000001,
+                            YCoordinate = 19.824997
+                        },
+                        new
+                        {
+                            Id = 24,
+                            LineId = 2,
+                            XCoordinate = 45.245547999999999,
+                            YCoordinate = 19.825106999999999
+                        },
+                        new
+                        {
+                            Id = 25,
+                            LineId = 2,
+                            XCoordinate = 45.243386000000001,
+                            YCoordinate = 19.825240000000001
+                        },
+                        new
+                        {
+                            Id = 26,
+                            LineId = 2,
+                            XCoordinate = 45.239845000000003,
+                            YCoordinate = 19.825330999999998
+                        },
+                        new
+                        {
+                            Id = 27,
+                            LineId = 2,
+                            XCoordinate = 45.238531999999999,
+                            YCoordinate = 19.825835000000001
+                        },
+                        new
+                        {
+                            Id = 28,
+                            LineId = 2,
+                            XCoordinate = 45.237127000000001,
+                            YCoordinate = 19.826509999999999
                         });
                 });
 
@@ -169,6 +302,12 @@ namespace RouteAPI.Migrations
                         {
                             Id = 1,
                             Name = "2",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "3",
                             Type = 1
                         });
                 });

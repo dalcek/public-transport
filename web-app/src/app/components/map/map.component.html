@@ -35,8 +35,6 @@
                         <agm-marker *ngIf="busLocation.latitude != -1 && showBus" [latitude]="busLocation.latitude" [longitude]="busLocation.longitude" [label]="" [iconUrl]="busIconUrl">
                         </agm-marker>
                      </agm-map>
-                     <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="ngOnDestroy()">stop</button>
-                     <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="location()">start</button>
                   </div>
                </div>
             </div>

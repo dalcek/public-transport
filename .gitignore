@@ -16,6 +16,8 @@
 
 # dependencies
 /web-app/node_modules
+/LocationAPI/node_modules
+
 
 # profiling files
 /web-appchrome-profiler-events*.json

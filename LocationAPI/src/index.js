@@ -3,54 +3,63 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const Coordinate = require('./models/coordinate')
 var amqp = require('amqplib/callback_api');
-const port = 6005
 
+var recieved = false;
 
-app.listen(port, () => {
-   console.log('Server is up on port ' + port)
-   //fakeCoordinates()
-})
+function connect() {
+   var rabbit = setInterval(() => {
 
-amqp.connect('amqp://rabbitmq', function(error0, connection) {
-   if (error0) {
-      throw error0;
-   }
-   connection.createChannel(function(error1, channel) {
-      if (error1) {
-         throw error1;
-      }
-      channel.assertQueue('', {
-         exclusive: true
-      }, function(error2, q) {
-         if (error2) {
-            throw error2;
+      try {
+         console.log('Connecting to rabbitmq.........')
+         amqp.connect('amqp://rabbitmq', function(error0, connection) {
+         if (error0) {
+            throw error0;
          }
-         var correlationId = generateUuid();
-         channel.consume(q.queue, function(msg) {
-            if (msg.properties.correlationId === correlationId) {
-               console.log('Recieved %s', msg.content.toString());
-               saveCoordinates(msg);
+         connection.createChannel(function(error1, channel) {
+            if (error1) {
+               throw error1;
             }
-         }, {
-               noAck: true
+            channel.assertQueue('', {
+               exclusive: true
+            }, function(error2, q) {
+               if (error2) {
+                  throw error2;
+               }
+               var correlationId = generateUuid();
+               channel.consume(q.queue, function(msg) {
+                  if (msg.properties.correlationId === correlationId) {
+                     console.log('Recieved %s', msg.content.toString());
+                     saveCoordinates(msg);
+                     recieved = true;
+                     clearInterval(rabbit)
+                  }
+               }, {
+                  noAck: true
+               });
+               channel.sendToQueue('rpc_queue',
+               Buffer.from('GetCoordinates'), {
+                  correlationId: correlationId,
+                  replyTo: q.queue
+               }
+               );
+            });
          });
-         channel.sendToQueue('rpc_queue',
-            Buffer.from('GetCoordinates'), {
-               correlationId: correlationId,
-               replyTo: q.queue
-            }
-         );
       });
-   });
- });
+      } catch (e) {
+         console.log(e)
+      }
+   }, 10000)
+}
 
 function generateUuid() {
    return Math.random().toString() +
-      Math.random().toString() +
-      Math.random().toString();
+   Math.random().toString() +
+   Math.random().toString();
 }
 
+
 const saveCoordinates = async (req) => {
+   console.log('**********savking coordinates***********')
    const coords = JSON.parse(req.content)
    await Coordinate.deleteMany({});
    if (coords["Success"] == true) {
@@ -69,56 +78,64 @@ const saveCoordinates = async (req) => {
    }
 }
 
-var numOfDeltas = 50 //150
-var currentX
-var currentY
-var nextX
-var nextY
-var j
-var routeCoords = []
-var userConnected = false
-var reverse = false
+// Number of coordinates per line
+var numOfCoords = new Map()
+var lineIds = []
+var lineCoordinatesMap = new Map()
+var lineCoordIterator = new Map()
 
-function wait(miliseconds) 
-{
-  var e = new Date().getTime() + (miliseconds);
-  while (new Date().getTime() <= e) {}
+var calcCoords;
+
+readCoordinates = async () => {
+   try {
+      console.log('reading coooooooooooords')
+      const response = await Coordinate.find()
+      response.forEach(row => lineIds.push(row.lineId))
+      lineIds = lineIds.filter((a, b) => lineIds.indexOf(a) === b)
+      
+      lineIds.forEach(lineId => {
+         let coords = response.filter(coord => coord.lineId == lineId)
+         console.log('za svaki line id: ' + coords)
+         calcCoords = []
+         simulateLocation(coords)
+         lineCoordinatesMap.set(lineId, calcCoords)
+         numOfCoords.set(lineId, calcCoords.length)
+         lineCoordIterator.set(lineId, 0)
+      })
+      return response
+   } catch (e) { 
+      console.log('******Error during reading coordinates from db: \n' + e)
+      return false
+   }
+}
+
+locationSender = () => {
+   console.log('sender')
+   setInterval(() => {
+      lineIds.forEach(id => {
+         let i = lineCoordIterator.get(id)
+         console.log('id ' + id + 'i ' + i)
+         io.to(id.toString()).emit('location', lineCoordinatesMap.get(id)[i])
+         i++
+         lineCoordIterator.set(id, i)
+         if (i == (numOfCoords.get(id) - 1)) {
+            lineCoordIterator.set(id, 0)
+            lineCoordinatesMap.set(id, lineCoordinatesMap.get(id).reverse())
+         }
+      })
+   }, 400)
 }
 
 io.on("connection", socket => {   
    console.log('New user connected')
-   userConnected = true
    socket.on('location', async (lineId) => {
-   console.log('location ' + lineId)
-   reverse = false
-   let coords = await readCoordinates(lineId)
-      
-   let i = 0;
-   simulateLocation(coords)
-   var foo = setInterval (function () {
-      console.log('sending ' + i)
-      if (userConnected == false) {
-         clearInterval(foo)
-      }
-      if (!reverse) {
-         i++
-         if (i == (routeCoords.length - 1)) {
-            reverse = true
-         }
-      }
-      else {
-         i--
-         if (i == 0) {
-            reverse = false
-         }
-      }
-      socket.emit('location', routeCoords[i])
-   }, 50) //300
+      console.log('location')
+      socket.leaveAll;
+      socket.join(lineId);
    })
 
-   socket.on('my message', (msg) => {
-      console.log('message: ' + msg)
-      socket.emit('my message', 'porukica')
+   socket.on('leave', room => {
+      socket.leave(room)
    })
 
    socket.on('disconnect', () => {
@@ -127,17 +144,53 @@ io.on("connection", socket => {
     });
  });
 
- http.listen(3000, () => {
+http.listen(3000, async () => {
    console.log('Listening for sockets 3000');
+   connect()
+   var read = setInterval(async () => {
+      if (recieved) {
+         await readCoordinates().then( _ => locationSender())
+         clearInterval(read)
+      }
+   }, 10000)
+   //locationSender()
 });
 
-readCoordinates = async (req) => {
-   try {
-      const response = await Coordinate.find({lineId: req})
-      return response
-   } catch (e) { 
-      console.log('******Error during reading coordinates from db: \n' + e)
-      return false
+var numOfDeltas = 10 //150
+var currentX
+var currentY
+var endX
+var endY
+var j
+
+// Calculates coordinates throughout the whole route and saves into calcCoords
+const simulateLocation = (coords) => {
+   console.log('simulate loc')
+   // Calls transition for every section of the route
+   for (let i = 0; i < coords.length - 1; i++) {
+      currentX = coords[i].x
+      currentY = coords[i].y
+      endX = coords[i + 1].x
+      endY = coords[i + 1].y
+      transition()
+   }
+}
+
+// Caluculates the direction which marker is moved for every section
+const transition = () => {
+   j = 0
+   deltaX = (endX - currentX) / numOfDeltas
+   deltaY = (endY - currentY) / numOfDeltas
+   moveMarker()
+}
+
+const moveMarker = () => {
+   currentX += deltaX
+   currentY += deltaY
+   calcCoords.push(currentX.toString() + '|' + currentY.toString())
+   if (j != numOfDeltas) {
+      j++
+      moveMarker()
    }
 }
 
@@ -165,32 +218,38 @@ const fakeCoordinates = () => {
    }
 }
 
-// Calculates coordinates throughout the whole route and saves into routeCoords
-const simulateLocation = (coords) => {
-   // Calls transition for every section of the route
-   for (let i = 0; i < coords.length - 1; i++) {
-      currentX = coords[i].x
-      currentY = coords[i].y
-      nextX = coords[i + 1].x
-      nextY = coords[i + 1].y
-      transition()
-   }
-}
 
-// Caluculates the direction which marker is moved for every section
-const transition = () => {
-   j = 0
-   deltaX = (nextX - currentX) / numOfDeltas
-   deltaY = (nextY - currentY) / numOfDeltas
-   moveMarker()
-}
 
-const moveMarker = () => {
-   currentX += deltaX
-   currentY += deltaY
-   routeCoords.push(currentX.toString() + '|' + currentY.toString())
-   if (j != numOfDeltas) {
-      j++
-      moveMarker()
-   }
-}
+// amqp.connect('amqp://rabbitmq', function(error0, connection) {
+//          if (error0) {
+//             throw error0;
+//          }
+//          connection.createChannel(function(error1, channel) {
+//             if (error1) {
+//                throw error1;
+//             }
+//             channel.assertQueue('', {
+//                exclusive: true
+//             }, function(error2, q) {
+//                if (error2) {
+//                   throw error2;
+//                }
+//                var correlationId = generateUuid();
+//                channel.consume(q.queue, function(msg) {
+//                   if (msg.properties.correlationId === correlationId) {
+//                      console.log('Recieved %s', msg.content.toString());
+//                      saveCoordinates(msg);
+//                      recieved = true;
+//                   }
+//                }, {
+//                   noAck: true
+//                });
+//                channel.sendToQueue('rpc_queue',
+//                Buffer.from('GetCoordinates'), {
+//                   correlationId: correlationId,
+//                   replyTo: q.queue
+//                }
+//                );
+//             });
+//          });
+//       });

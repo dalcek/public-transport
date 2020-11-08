@@ -44,14 +44,14 @@ export class AccountService {
       }));
   }
 
-  getUser(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/account`)
+   getUser(): Observable<any> {
+     return this.http.get(`${this.baseUrl}/account`)
       .pipe(catchError((err) => {
-        console.log('Error in get user service');
-        console.error(err);
-        return throwError(err)
+         console.log('Error in get user service');
+         console.error(err);
+         return throwError(err)
       }));
-  }
+   }
 
   getUnvalidatedUsers(): Observable<any> {
    return this.http.get(`${this.baseUrl}/account/getUnvalidatedUsers`)
@@ -78,4 +78,13 @@ export class AccountService {
       return throwError(err)
     }));
   }
+
+  deleteUser(user: AddUserDTO): Observable<any> {
+   return this.http.post(`${this.baseUrl}/account/delete`, user)
+    .pipe(catchError((err) => {
+       console.log('Error in get user service');
+       console.error(err);
+       return throwError(err)
+    }));
+ }
 }

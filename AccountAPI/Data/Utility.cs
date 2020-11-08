@@ -65,8 +65,9 @@ namespace AccountAPI.Data
       {
          Do<object>(() =>
          {
-               action();
-               return null;
+            Console.WriteLine("\n\n\n********************DO FUNCTION**********\n\n\n\n\n");
+            action();
+            return null;
          }, retryInterval, maxAttemptCount);
       }
 
@@ -76,18 +77,18 @@ namespace AccountAPI.Data
 
          for (int attempted = 0; attempted < maxAttemptCount; attempted++)
          {
-               try
+            try
+            {
+               if (attempted > 0)
                {
-                  if (attempted > 0)
-                  {
-                     Thread.Sleep(retryInterval);
-                  }
-                  return action();
+                  Thread.Sleep(retryInterval);
                }
-               catch (Exception ex)
-               {
-                  exceptions.Add(ex);
-               }
+               return action();
+            }
+            catch (Exception ex)
+            {
+               exceptions.Add(ex);
+            }
          }
          throw new AggregateException(exceptions);
       }

@@ -130,6 +130,139 @@ namespace RouteAPI.Data
                XCoordinate = 45.254877,  
                YCoordinate = 19.841879,
                LineId = 1,
+            },
+            new Coordinate
+            {
+               Id = 10,
+               XCoordinate = 45.236991, 
+               YCoordinate = 19.826449,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 11,
+               XCoordinate = 45.238233,   
+               YCoordinate = 19.830771,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 12,
+               XCoordinate = 45.239185,   
+               YCoordinate = 19.834213,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 13,
+               XCoordinate = 45.239605,   
+               YCoordinate = 19.835805,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 14,
+               XCoordinate = 45.241640,   
+               YCoordinate = 19.842816,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 15,
+               XCoordinate = 45.244140,    
+               YCoordinate = 19.841381,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 16,
+               XCoordinate = 45.246419,    
+               YCoordinate = 19.840148,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 17,
+               XCoordinate = 45.247974,    
+               YCoordinate = 19.839265,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 18,
+               XCoordinate = 45.247740,    
+               YCoordinate = 19.836482,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 19,
+               XCoordinate = 45.248658,    
+               YCoordinate = 19.833655,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 20,
+               XCoordinate = 45.249700,    
+               YCoordinate = 19.832616,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 21,
+               XCoordinate = 45.249218,    
+               YCoordinate = 19.830916,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 22,
+               XCoordinate = 45.249295,    
+               YCoordinate = 19.824555,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 23,
+               XCoordinate = 45.248145,    
+               YCoordinate = 19.824997,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 24,
+               XCoordinate = 45.245548,    
+               YCoordinate = 19.825107,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 25,
+               XCoordinate = 45.243386,    
+               YCoordinate = 19.825240,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 26,
+               XCoordinate = 45.239845,    
+               YCoordinate = 19.825331,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 27,
+               XCoordinate = 45.238532,    
+               YCoordinate = 19.825835,
+               LineId = 2,
+            },
+            new Coordinate
+            {
+               Id = 28,
+               XCoordinate = 45.237127,    
+               YCoordinate = 19.826510,
+               LineId = 2,
             }
          );
 
@@ -158,6 +291,15 @@ namespace RouteAPI.Data
             {
                Id = 1,
                Name = "2",
+               Type = Enums.LineType.City
+            }
+         );
+
+         modelBuilder.Entity<Line>().HasData(
+            new Line
+            {
+               Id = 2,
+               Name = "3",
                Type = Enums.LineType.City
             }
          );

@@ -31,9 +31,14 @@ namespace RouteAPI.Services
          try
          {
             Departure departure = await _context.Departures.FirstOrDefaultAsync(d => d.Id == newDeparture.Id);
-            DateTime tmp = Convert.ToDateTime(time);
+            //DateTime tmp = Convert.ToDateTime(time);
             if (departure != null)
             {
+               
+               DateTime tmp;// = Convert.ToDateTime(time);
+               tmp = new DateTime(2020, 10, 23, Int32.Parse(newDeparture.Time.Split(':')[0]), Int32.Parse(newDeparture.Time.Split(':')[1]), 0);
+
+
                departure.Time = tmp;
                _context.Departures.Update(departure);
                await _context.SaveChangesAsync();
@@ -67,10 +72,11 @@ namespace RouteAPI.Services
          ServiceResponse<GetDeparturesDTO> response = new ServiceResponse<GetDeparturesDTO>();
          List<DepartureDTO> departures = new List<DepartureDTO>();
          // Doesnt work without the date
-         string time = "23.10.2020. " + newDeparture.Time;
+         string time = "23/10/2020. " + newDeparture.Time;
          try
          {
-            DateTime tmp = Convert.ToDateTime(time);
+            DateTime tmp;// = Convert.ToDateTime(time);
+            tmp = new DateTime(2020, 10, 23, Int32.Parse(newDeparture.Time.Split(':')[0]), Int32.Parse(newDeparture.Time.Split(':')[1]), 0);
             await _context.Departures.AddAsync(
                new Departure
                {
@@ -458,6 +464,7 @@ namespace RouteAPI.Services
          {
             response.Success = false;
             response.Message = e.Message;
+            Console.WriteLine("****ERROR PORUKA GET COORDS " + e.Message);
          }
          return response;
       }

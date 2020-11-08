@@ -40,10 +40,10 @@ export class MapComponent implements OnInit {
       this.busIconUrl = "../../../assets/busicon.png";
       this.markerIconUrl = "../../../assets/markericon.png";
       this.subscribeToBusLocation()
-      this.locationService.message.subscribe(result => console.log(result));
-      //this._busSub = this.locationService.busLocation.subscribe(result => console.log(result))
       this.getStations();
       this.getLines();
+
+      //this.showBus = true;       //OBRISI!!!!!!!
    }
 
    ngOnDestroy() {
@@ -51,21 +51,27 @@ export class MapComponent implements OnInit {
       this.locationService.stopBusLocation()
    }
 
+   mes() {
+      this.locationService.sendMessage('1');
+      this.locationService.message.subscribe(result => console.log(result));
+   }
 
    // send() {
    //    this.locationService.sendMessage('cao')
    // }
 
    location() {
-      this.locationService.requestBusLocation(1);
+      this.locationService.requestBusLocation('1');
    }
 
    subscribeToBusLocation() {
       this._busSub = this.locationService.busLocation.subscribe(
          result => {
             console.log(result);
-            this.busLocation.latitude = parseFloat(result.split('|')[0])
-            this.busLocation.longitude = parseFloat(result.split('|')[1]) 
+            if (result != null) {
+               this.busLocation.latitude = parseFloat(result.split('|')[0])
+               this.busLocation.longitude = parseFloat(result.split('|')[1]) 
+            }
          }, err => {
             console.log(err);
          }
@@ -79,9 +85,12 @@ export class MapComponent implements OnInit {
       this.locationService.stopBusLocation()
       this.showBus = false
       if (event.target.value != 'choose') {
+         if (this.lineId > 0) {
+            this.locationService.leaveRoom(this.lineId.toString())
+         }
          this.lineId = parseInt(event.target.value);
          this.showBus = true;
-         this.locationService.requestBusLocation(this.lineId);
+         this.locationService.requestBusLocation(this.lineId.toString());
          this.getLineRoute();
          console.log(this.lineCoords);
          for (let i = 0; i < this.lines.length; i++) {

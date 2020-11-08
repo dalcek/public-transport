@@ -6,7 +6,6 @@ router.get('/test', async (req, res) => {
 })
 // '/tasts', auth, async (req, res
 router.post('/tests', async (req, res) => {
-   console.log('udje');
    console.log(req.body)
    const test = new Test({
       ...req.body

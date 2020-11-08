@@ -16,6 +16,16 @@
             <h5 class="card-title text-center">EDIT PROFILE</h5>
             <br>
             <form class="form-signin" [formGroup]="profileForm" (ngSubmit)="submit()">
+               <div *ngIf="this.errorMessage!=null; else empty_content" >
+                  <div class="form-label-group">
+                    <div class="badge badge-danger">{{this.errorMessage}}</div>
+                  </div>
+                </div>
+                <ng-template #empty_content>
+                  <div class="form-label-group">
+                      <br>
+                    </div>
+              </ng-template>
               <div class="row">
                 <div class="col-md-6">
                     <div class="form-label-group">
@@ -66,21 +76,10 @@
                     </div>
                   </ng-template>
                 </div>
-              </div>
-              <br>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <button class="btn btn-lg btn-primary btn-block text-uppercase" (click)="changePassword()">Change password</button>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-label-group">
-                    <button class="btn btn-lg btn-primary btn-block text-uppercase" id="deleteButton" (click)="deleteProfile()">Delete profile</button>
-                  </div>
-                </div>
-              </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">save</button>
+               </div>
+               <br>
+               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">save</button>
+              
             </form>
           </div>
         </div>
