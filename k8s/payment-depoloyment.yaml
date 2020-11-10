@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ticket-deployment
+  name: payment-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: ticket
+      component: payment
   template:
     metadata:
       labels:
-        component: ticket
+        component: payment
     spec:
       containers:
-        - name: ticket
-          image: 1608996/ticket
+        - name: payment
+          image: 1608996/payment
           ports:
             - containerPort: 80

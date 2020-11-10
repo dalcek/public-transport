@@ -10,8 +10,8 @@ import { of } from 'rxjs/internal/observable/of';
 })
 export class AccountService {
 
-  baseUrl = 'http://localhost:6001';
-
+  //baseUrl = 'http://localhost:6001';
+  baseUrl = 'account';
 
   constructor(private http: HttpClient) { }
 

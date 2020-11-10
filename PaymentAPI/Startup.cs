@@ -75,7 +75,9 @@ namespace PaymentAPI
             endpoints.MapControllers();
          });
 
-         Data.Utility.UpdateDatabase(app);
+         Data.Utility.Do(() => Data.Utility.UpdateDatabase(app), TimeSpan.FromSeconds(40), 5); 
+
+         //Data.Utility.UpdateDatabase(app);
       }
    }
 }

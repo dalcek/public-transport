@@ -110,3 +110,11 @@ services:
     ports:
       - "6005:6005"
       - "3000:3000"
+  client:
+    restart: always
+    container_name: client
+    build:
+      dockerfile: Dockerfile
+      context: './web-app'
+    ports:
+      - "4200:80"   

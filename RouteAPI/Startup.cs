@@ -95,8 +95,11 @@ namespace RouteAPI
             endpoints.MapControllers();
          });
 
-         Data.Utility.UpdateDatabase(app);
-         app.UseRabbitListener();
+         Data.Utility.Do(() => Data.Utility.UpdateDatabase(app), TimeSpan.FromSeconds(40), 5);
+         Data.Utility.Do(() => app.UseRabbitListener(), TimeSpan.FromSeconds(40), 5);
+
+         //Data.Utility.UpdateDatabase(app);
+         //app.UseRabbitListener();
       }
    }
 }

@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ticket-deployment
+  name: route-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: ticket
+      component: route
   template:
     metadata:
       labels:
-        component: ticket
+        component: route
     spec:
       containers:
-        - name: ticket
-          image: 1608996/ticket
+        - name: route
+          image: 1608996/route
           ports:
             - containerPort: 80

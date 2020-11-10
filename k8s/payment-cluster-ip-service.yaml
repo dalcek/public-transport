@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ticket-cluster-ip-service
+  name: payment-cluster-ip-service
 spec:
   type: ClusterIP
   selector:
-    component: ticket
+    component: payment
   ports:
-    - port: 6002
+    - port: 6003
       targetPort: 80

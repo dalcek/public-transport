@@ -9,7 +9,9 @@ import { AddDepartureDTO, CreateTicketDTO, PricelistDTO } from '../../models/mod
 })
 export class TicketService {
 
-  baseUrl = 'http://localhost:6002';
+  //baseUrl = 'http://localhost:6002';
+  baseUrl = 'ticket';
+
   constructor(private http: HttpClient) { }
 
   getAllPrices(): Observable<any> {

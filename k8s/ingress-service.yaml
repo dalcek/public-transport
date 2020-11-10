@@ -10,7 +10,27 @@ spec:
   rules:
     - http:
         paths:
-          - path: /api/?(.*)
+          - path: /api/account/?(.*)
+            backend:
+              serviceName: account-cluster-ip-service
+              servicePort: 6001
+          - path: /api/ticket/?(.*)
             backend:
               serviceName: ticket-cluster-ip-service
-              servicePort: 5001
+              servicePort: 6002
+          - path: /api/payment/?(.*)
+            backend:
+              serviceName: payment-cluster-ip-service
+              servicePort: 6003
+          - path: /api/route/?(.*)
+            backend:
+              serviceName: route-cluster-ip-service
+              servicePort: 6004
+          - path: /api/location/?(.*)
+            backend:
+              serviceName: location-cluster-ip-service
+              servicePort: 3000
+          - path: /?(.*)
+            backend:
+              serviceName: client-cluster-ip-service
+              servicePort: 4200

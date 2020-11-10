@@ -7,48 +7,43 @@ var amqp = require('amqplib/callback_api');
 var recieved = false;
 
 function connect() {
-   var rabbit = setInterval(() => {
-
-      try {
-         console.log('Connecting to rabbitmq.........')
-         amqp.connect('amqp://rabbitmq', function(error0, connection) {
-         if (error0) {
-            throw error0;
-         }
-         connection.createChannel(function(error1, channel) {
-            if (error1) {
-               throw error1;
-            }
-            channel.assertQueue('', {
-               exclusive: true
-            }, function(error2, q) {
-               if (error2) {
-                  throw error2;
-               }
-               var correlationId = generateUuid();
-               channel.consume(q.queue, function(msg) {
-                  if (msg.properties.correlationId === correlationId) {
-                     console.log('Recieved %s', msg.content.toString());
-                     saveCoordinates(msg);
-                     recieved = true;
-                     clearInterval(rabbit)
-                  }
-               }, {
-                  noAck: true
-               });
-               channel.sendToQueue('rpc_queue',
-               Buffer.from('GetCoordinates'), {
-                  correlationId: correlationId,
-                  replyTo: q.queue
-               }
-               );
-            });
-         });
-      });
-      } catch (e) {
-         console.log(e)
+   console.log('Connecting to rabbitmq.........')
+   amqp.connect('amqp://rabbitmq', function(error0, connection) {
+   if (error0) {
+      console.log('Connect error [RabbitMQ]')
+      throw error0;
+   }
+   connection.createChannel(function(error1, channel) {
+      if (error1) {
+      console.log('Create channel error [RabbitMQ]')
+         throw error1;
       }
-   }, 10000)
+      channel.assertQueue('', {
+         exclusive: true
+      }, function(error2, q) {
+         if (error2) {
+            throw error2;
+         }
+         var correlationId = generateUuid();
+         channel.consume(q.queue, function(msg) {
+            if (msg.properties.correlationId === correlationId) {
+               console.log('Recieved %s', msg.content.toString());
+               saveCoordinates(msg);
+               recieved = true;
+               clearInterval(rabbit)
+            }
+         }, {
+            noAck: true
+         });
+         channel.sendToQueue('rpc_queue',
+         Buffer.from('GetCoordinates'), {
+            correlationId: correlationId,
+            replyTo: q.queue
+         }
+         );
+      });
+   });
+});
 }
 
 function generateUuid() {
@@ -59,7 +54,7 @@ function generateUuid() {
 
 
 const saveCoordinates = async (req) => {
-   console.log('**********savking coordinates***********')
+   console.log('***Saving coordinates')
    const coords = JSON.parse(req.content)
    await Coordinate.deleteMany({});
    if (coords["Success"] == true) {
@@ -71,7 +66,7 @@ const saveCoordinates = async (req) => {
          })
          toSave.save()
       });
-      console.log('Coordinates SAVED.')
+      console.log('***Coordinates SAVED.')
    }
    else {
       console.log("Getting coordinates from RouteAPI FAILED")
@@ -88,7 +83,6 @@ var calcCoords;
 
 readCoordinates = async () => {
    try {
-      console.log('reading coooooooooooords')
       const response = await Coordinate.find()
       response.forEach(row => lineIds.push(row.lineId))
       lineIds = lineIds.filter((a, b) => lineIds.indexOf(a) === b)
@@ -104,17 +98,16 @@ readCoordinates = async () => {
       })
       return response
    } catch (e) { 
-      console.log('******Error during reading coordinates from db: \n' + e)
+      console.log('***Error during reading coordinates from db: \n' + e)
       return false
    }
 }
 
 locationSender = () => {
-   console.log('sender')
    setInterval(() => {
       lineIds.forEach(id => {
          let i = lineCoordIterator.get(id)
-         console.log('id ' + id + 'i ' + i)
+         console.log('Id ' + id + 'i ' + i)
          io.to(id.toString()).emit('location', lineCoordinatesMap.get(id)[i])
          i++
          lineCoordIterator.set(id, i)
@@ -129,7 +122,6 @@ locationSender = () => {
 io.on("connection", socket => {   
    console.log('New user connected')
    socket.on('location', async (lineId) => {
-      console.log('location')
       socket.leaveAll;
       socket.join(lineId);
    })
@@ -156,7 +148,7 @@ http.listen(3000, async () => {
    //locationSender()
 });
 
-var numOfDeltas = 10 //150
+var numOfDeltas = 70 //150
 var currentX
 var currentY
 var endX
@@ -217,39 +209,3 @@ const fakeCoordinates = () => {
       console.log("Getting coordinates from RouteAPI FAILED")
    }
 }
-
-
-
-// amqp.connect('amqp://rabbitmq', function(error0, connection) {
-//          if (error0) {
-//             throw error0;
-//          }
-//          connection.createChannel(function(error1, channel) {
-//             if (error1) {
-//                throw error1;
-//             }
-//             channel.assertQueue('', {
-//                exclusive: true
-//             }, function(error2, q) {
-//                if (error2) {
-//                   throw error2;
-//                }
-//                var correlationId = generateUuid();
-//                channel.consume(q.queue, function(msg) {
-//                   if (msg.properties.correlationId === correlationId) {
-//                      console.log('Recieved %s', msg.content.toString());
-//                      saveCoordinates(msg);
-//                      recieved = true;
-//                   }
-//                }, {
-//                   noAck: true
-//                });
-//                channel.sendToQueue('rpc_queue',
-//                Buffer.from('GetCoordinates'), {
-//                   correlationId: correlationId,
-//                   replyTo: q.queue
-//                }
-//                );
-//             });
-//          });
-//       });

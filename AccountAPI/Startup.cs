@@ -69,7 +69,10 @@ namespace AccountAPI
                var factory = new ConnectionFactory()
                {
                   //HostName = Configuration["EventBus:HostName"]
-                  HostName = "rabbitmq"
+                  // For running with docker
+                  HostName = "rabbitmq"   
+                  // For running with k8s 
+                  //HostName = "rabbitmq-cluster-ip-service"
                   //UserName = "user",
                   //Password = "password",
                   //VirtualHost = "/",

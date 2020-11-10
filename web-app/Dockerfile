@@ -6,5 +6,6 @@ COPY . .
 RUN npm run build
 ### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
+EXPOSE 80
+COPY ./nginx/default.conf /etc/nginx/default.conf
 COPY --from=0 /usr/src/app/dist/web-app /usr/share/nginx/html
-#package-lock.json

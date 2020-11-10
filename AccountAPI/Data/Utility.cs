@@ -60,7 +60,6 @@ namespace AccountAPI.Data
          }
       }
       // Calls the function multiple times until it doesn't fail
-      // Used for db migration on startup 
       public static void Do(Action action, TimeSpan retryInterval, int maxAttemptCount = 3)
       {
          Do<object>(() =>

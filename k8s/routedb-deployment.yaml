@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ticketdb-deployment 
+  name: routedb-deployment 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: ticketdb
+      component: routedb
   template:
     metadata:
       labels:
-        component: ticketdb
+        component: routedb
     spec:
       containers:
-        - name: ticketdb
+        - name: routedb
           image: mcr.microsoft.com/mssql/server:2017-latest
           ports:
             - containerPort: 1433
@@ -21,4 +21,4 @@ spec:
             - name: ACCEPT_EULA
               value: "Y"
             - name: SA_PASSWORD
-              value: NikolinTicket9!
+              value: NikolinRoute9!

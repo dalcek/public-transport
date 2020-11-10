@@ -9,7 +9,8 @@ import { PaymentDTO } from 'src/app/models/models';
 })
 export class PaymentService {
 
-  baseUrl = 'http://localhost:6003';
+  //baseUrl = 'http://localhost:6003';
+  baseUrl = 'payment';
 
   constructor(private http: HttpClient) { }
 

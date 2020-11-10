@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ticketdb-cluster-ip-service
+  name: accountdb-cluster-ip-service
 spec:
   type: ClusterIP
   selector:
-    component: ticketdb
+    component: accountdb
   ports:
-    - port: 1435
+    - port: 1436
       targetPort: 1433
