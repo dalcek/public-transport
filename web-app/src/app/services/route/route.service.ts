@@ -8,9 +8,10 @@ import { AddDepartureDTO, AddLineDTO, AddStationDTO, LineDTO } from 'src/app/mod
   providedIn: 'root'
 })
 export class RouteService {
-
-   //baseUrl: string = 'http://localhost:6004';
-   baseUrl: string = 'route';
+   // For running on docker
+   baseUrl: string = 'http://localhost:6004';
+   // For running on k8s
+   //baseUrl = 'http://localhost:80';
 
 
    constructor(private http: HttpClient) { }
@@ -43,8 +44,8 @@ export class RouteService {
       }));
    }
 
-   getLineNames(dayType: string, lineType: string): Observable<any> {
-      return this.http.get(`${this.baseUrl}/route/getLineNames?dayType=${dayType}&lineType=${lineType}`)
+   getLineNames(lineType: string): Observable<any> {
+      return this.http.get(`${this.baseUrl}/route/getLineNames?lineType=${lineType}`)
       .pipe(catchError(err => {
          console.log('Error in get lines service');
          console.error(err);

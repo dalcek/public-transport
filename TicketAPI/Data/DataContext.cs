@@ -14,15 +14,9 @@ namespace TicketAPI.Data
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)
       {
-         // modelBuilder.Entity<PricelistItem>().HasKey(
-         //    pi => new { pi.PricelistId, pi.ItemId }
-         // );
-
          modelBuilder.Entity<Ticket>().HasKey(
             t => new { t.Id }
          );
-
-         //modelBuilder.Entity<Ticket>().HasOne(pi => )
 
          modelBuilder.Entity<Coefficient>().HasData(
             new Coefficient
@@ -126,6 +120,15 @@ namespace TicketAPI.Data
                PricelistItemId = 2,
                Valid = true,
                Price = 250,
+               UserId = 3
+            },
+             new Ticket
+            {
+               Id = 3,
+               IssueTime = new System.DateTime(2020, 11, 12, 10, 13, 0),
+               PricelistItemId = 4,
+               Valid = true,
+               Price = 10000,
                UserId = 3
             }
          );

@@ -8,9 +8,10 @@ import { PaymentDTO } from 'src/app/models/models';
   providedIn: 'root'
 })
 export class PaymentService {
-
-  //baseUrl = 'http://localhost:6003';
-  baseUrl = 'payment';
+  // For running on docker
+  baseUrl = 'http://localhost:6003';
+  // For running on k8s
+  //baseUrl = 'http://localhost:80';
 
   constructor(private http: HttpClient) { }
 

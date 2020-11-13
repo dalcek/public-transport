@@ -57,6 +57,8 @@ export class ProfileComponent implements OnInit {
                   result => {
                      console.log(result.data);
                      this.photoPath = `http://localhost:6001/${result.data}`;
+                     //this.photoPath = `http://localhost:80/account/${result.data}`;
+
                      this.photoChanged = false;
                      this.photoFile = null;
                      location.reload();
@@ -118,6 +120,7 @@ export class ProfileComponent implements OnInit {
     }
     if (user.photo) {
       this.photoPath = `http://localhost:6001/${user.photo}`;
+      //this.photoPath = `http://localhost:80/account/${user.photo}`;
     }
     if (user.userStatus) {
       if (user.userStatus == "InProcess") {

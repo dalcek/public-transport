@@ -89,9 +89,9 @@ namespace RouteAPI.Controller
 
       [AllowAnonymous]
       [HttpGet("getLineNames")]
-      public async Task<IActionResult> GetLineNames(string dayType, string lineType)
+      public async Task<IActionResult> GetLineNames(string lineType)
       {
-         ServiceResponse<List<LineNameDTO>> response = await _routeService.GetLineNames(dayType, lineType);
+         ServiceResponse<List<LineNameDTO>> response = await _routeService.GetLineNames(lineType);
          if (!response.Success)
          {
             return BadRequest(response);

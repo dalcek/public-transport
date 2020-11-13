@@ -176,16 +176,15 @@ namespace RouteAPI.Services
          return response;
       }
 
-      public async Task<ServiceResponse<List<LineNameDTO>>> GetLineNames(string dayType, string lineType)
+      public async Task<ServiceResponse<List<LineNameDTO>>> GetLineNames(string lineType)
       {
          ServiceResponse<List<LineNameDTO>> response = new ServiceResponse<List<LineNameDTO>>();
          List<LineNameDTO> lineNames = new List<LineNameDTO>();
 
-         Enums.DayType day = (Enums.DayType) Enum.Parse(typeof(Enums.DayType), dayType);
          Enums.LineType line = (Enums.LineType) Enum.Parse(typeof(Enums.LineType), lineType);
          try
          {
-            List<Line> lines = await _context.Lines.ToListAsync();
+            List<Line> lines = await _context.Lines.Where(l => l.Type == line).ToListAsync();
             foreach (Line temp in lines)
             {
                lineNames.Add(new LineNameDTO {Id = temp.Id, Name = temp.Name});
@@ -281,7 +280,7 @@ namespace RouteAPI.Services
       {
          ServiceResponse<List<LineDTO>> response = new ServiceResponse<List<LineDTO>>();
          List<LineDTO> lineDTOs = new List<LineDTO>();
-         LineDTO lineDTO = new LineDTO();
+         
          List<LineStation> lineStations = new List<LineStation>();
          Enums.LineType type = (Enums.LineType) Enum.Parse(typeof(Enums.LineType), newLine.Type);
          
@@ -303,6 +302,7 @@ namespace RouteAPI.Services
             List<Line> lines = await _context.Lines.Include(l => l.LineStations).ToListAsync();
             foreach (var temp in lines)
             {
+               LineDTO lineDTO = new LineDTO();
                lineDTO.Id = temp.Id;
                lineDTO.Name = temp.Name;
                lineDTO.Type = temp.Type.ToString();

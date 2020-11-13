@@ -10,8 +10,8 @@ using TicketAPI.Data;
 namespace TicketAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201012191712_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20201113013344_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -225,6 +225,15 @@ namespace TicketAPI.Migrations
                             IssueTime = new DateTime(2020, 6, 5, 16, 13, 56, 0, DateTimeKind.Unspecified),
                             Price = 250.0,
                             PricelistItemId = 2,
+                            UserId = 3,
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IssueTime = new DateTime(2020, 11, 12, 10, 13, 0, 0, DateTimeKind.Unspecified),
+                            Price = 10000.0,
+                            PricelistItemId = 4,
                             UserId = 3,
                             Valid = true
                         });

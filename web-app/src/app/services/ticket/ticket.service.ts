@@ -8,9 +8,10 @@ import { AddDepartureDTO, CreateTicketDTO, PricelistDTO } from '../../models/mod
   providedIn: 'root'
 })
 export class TicketService {
-
-  //baseUrl = 'http://localhost:6002';
-  baseUrl = 'ticket';
+  // For running on docker
+  baseUrl = 'http://localhost:6002';
+  // For running on k8s
+  //baseUrl = 'http://localhost:80';
 
   constructor(private http: HttpClient) { }
 

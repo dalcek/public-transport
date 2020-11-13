@@ -9,9 +9,10 @@ import { of } from 'rxjs/internal/observable/of';
   providedIn: 'root'
 })
 export class AccountService {
-
-  //baseUrl = 'http://localhost:6001';
-  baseUrl = 'account';
+   // For running on docker
+   baseUrl = 'http://localhost:6001';
+   // For running on k8s
+   //baseUrl = 'http://localhost:80';
 
   constructor(private http: HttpClient) { }
 

@@ -49,14 +49,6 @@ services:
       SA_PASSWORD: "NikolinPayment9!"
     ports:
       - "1437:1433"
-  locationdb:
-    restart: always
-    image: mongo
-    container_name: locationdb
-    depends_on:
-      - rabbitmq
-    ports:
-      - "1438:27017"
   account:
     restart: always
     container_name: account
@@ -101,7 +93,6 @@ services:
     restart: always
     container_name: location
     depends_on:
-      - locationdb
       - rabbitmq
       - route
     build:
@@ -110,11 +101,11 @@ services:
     ports:
       - "6005:6005"
       - "3000:3000"
-  client:
-    restart: always
-    container_name: client
-    build:
-      dockerfile: Dockerfile
-      context: './web-app'
-    ports:
-      - "4200:80"   
+  #client:
+    #restart: always
+    #container_name: client
+    #build:
+      #dockerfile: Dockerfile
+      #context: './web-app'
+    #ports:
+      #- "4200:80"   

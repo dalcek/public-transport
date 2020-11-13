@@ -26,7 +26,7 @@ export class TimetableComponent implements OnInit {
    }
 
    getLines() {
-      this.routeService.getLineNames(this.timetableForm.controls.dayType.value, this.timetableForm.controls.lineType.value).subscribe(
+      this.routeService.getLineNames(this.timetableForm.controls.lineType.value).subscribe(
          result => {
             this.lines = result.data;
             console.log(this.lines);
@@ -56,7 +56,6 @@ export class TimetableComponent implements OnInit {
          this.routeService.getDepartures(this.timetableForm.controls.dayType.value, event.target.value).subscribe(
             result => {
                this.departures = result.data.departures;
-               this.departures.sort((a, b) => a.Time.localeCompare(b.Time));
                console.log(this.departures);
             },
             err => {

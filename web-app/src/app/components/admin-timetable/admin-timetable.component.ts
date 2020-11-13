@@ -32,7 +32,7 @@ export class AdminTimetableComponent implements OnInit {
    }
 
    getLines() {
-      this.routeService.getLineNames(this.timetableForm.controls.dayType.value, this.timetableForm.controls.lineType.value).subscribe(
+      this.routeService.getLineNames(this.timetableForm.controls.lineType.value).subscribe(
          result => {
             this.lines = result.data;
             console.log(this.lines);

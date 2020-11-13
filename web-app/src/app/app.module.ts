@@ -25,9 +25,10 @@ import { AgmCoreModule } from '@agm/core';
 import { MapComponent } from './components/map/map.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-
-//const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
-const config: SocketIoConfig = { url: 'location', options: {} };
+// For running with docker-compose
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+// For running with k8s
+//const config: SocketIoConfig = { url: 'http://localhost:80', options: { transports: ['websocket', 'polling', 'flashsocket'] } };
 
 @NgModule({
   declarations: [

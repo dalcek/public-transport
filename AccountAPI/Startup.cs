@@ -68,22 +68,19 @@ namespace AccountAPI
             {
                var factory = new ConnectionFactory()
                {
-                  //HostName = Configuration["EventBus:HostName"]
-                  // For running with docker
+                  // For running locally without docker
+                  //HostName = "localhost"
+
+                  // For running with docker-compose
                   HostName = "rabbitmq"   
+
                   // For running with k8s 
                   //HostName = "rabbitmq-cluster-ip-service"
-                  //UserName = "user",
-                  //Password = "password",
-                  //VirtualHost = "/",
-                  // HostName = "192.168.0.14",
-                  //Port = AmqpTcpEndpoint.UseDefaultPort
                };
                return new RabbitMQConnection(factory);
             });
 
             services.AddSingleton<RpcServer>();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,10 +90,10 @@ namespace AccountAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            // TODO: Write your own CORS policies, more at https://stackoverflow.com/questions/56328474/origin-http-localhost4200-has-been-blocked-by-cors-policy-in-angular7
+            // TODO: Read about writing your own CORS policies, more at https://stackoverflow.com/questions/56328474/origin-http-localhost4200-has-been-blocked-by-cors-policy-in-angular7
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-            // If running without Docker, create folder AccountAPI/Resources/Images
+            // If running without Docker, path should be AccountAPI/Resources/Images
             Directory.CreateDirectory("/app/Resources/Images");
             app.UseStaticFiles(new StaticFileOptions 
             {
@@ -116,12 +113,10 @@ namespace AccountAPI
             {
                endpoints.MapControllers();
             });
-            Data.Utility.Do(() => Data.Utility.UpdateDatabase(app), TimeSpan.FromSeconds(40), 5); 
-            Data.Utility.Do(() => app.UseRabbitListener(), TimeSpan.FromSeconds(40), 5); 
-            
-            //Data.Utility.UpdateDatabase(app);
-            //Initilize Rabbit Listener in ApplicationBuilderExtentions
-            //app.UseRabbitListener();
+
+            Data.Utility.Do(() => Data.Utility.UpdateDatabase(app), TimeSpan.FromSeconds(60), 6);
+            //Initilize Rabbit Listener in ApplicationBuilderExtentions 
+            Data.Utility.Do(() => app.UseRabbitListener(), TimeSpan.FromSeconds(60), 6); 
         }
     }
 }

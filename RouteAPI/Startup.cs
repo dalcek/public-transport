@@ -58,13 +58,14 @@ namespace RouteAPI
             {
                var factory = new ConnectionFactory()
                {
-                  //HostName = Configuration["EventBus:HostName"]
-                  HostName = "rabbitmq"
-                  //UserName = "user",
-                  //Password = "password",
-                  //VirtualHost = "/",
-                  // HostName = "192.168.0.14",
-                  //Port = AmqpTcpEndpoint.UseDefaultPort
+                  // For running locally without docker
+                  //HostName = "localhost"
+
+                  // For running with docker-compose
+                  HostName = "rabbitmq"   
+
+                  // For running with k8s 
+                  //HostName = "rabbitmq-cluster-ip-service"
                };
                return new RabbitMQConnection(factory);
             });
@@ -95,11 +96,8 @@ namespace RouteAPI
             endpoints.MapControllers();
          });
 
-         Data.Utility.Do(() => Data.Utility.UpdateDatabase(app), TimeSpan.FromSeconds(40), 5);
-         Data.Utility.Do(() => app.UseRabbitListener(), TimeSpan.FromSeconds(40), 5);
-
-         //Data.Utility.UpdateDatabase(app);
-         //app.UseRabbitListener();
+         Data.Utility.Do(() => Data.Utility.UpdateDatabase(app), TimeSpan.FromSeconds(60), 6);
+         Data.Utility.Do(() => app.UseRabbitListener(), TimeSpan.FromSeconds(60), 6);
       }
    }
 }

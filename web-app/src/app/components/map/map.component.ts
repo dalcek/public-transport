@@ -42,26 +42,11 @@ export class MapComponent implements OnInit {
       this.subscribeToBusLocation()
       this.getStations();
       this.getLines();
-
-      //this.showBus = true;       //OBRISI!!!!!!!
    }
 
    ngOnDestroy() {
       this._busSub.unsubscribe();
       this.locationService.stopBusLocation()
-   }
-
-   mes() {
-      this.locationService.sendMessage('1');
-      this.locationService.message.subscribe(result => console.log(result));
-   }
-
-   // send() {
-   //    this.locationService.sendMessage('cao')
-   // }
-
-   location() {
-      this.locationService.requestBusLocation('1');
    }
 
    subscribeToBusLocation() {
@@ -84,15 +69,15 @@ export class MapComponent implements OnInit {
       this.busLocation = new GeoLocation(-1, -1)
       this.locationService.stopBusLocation()
       this.showBus = false
+      if (this.lineId != null ) {
+         this.locationService.leaveRoom(this.lineId.toString())
+      }
       if (event.target.value != 'choose') {
-         if (this.lineId > 0) {
-            this.locationService.leaveRoom(this.lineId.toString())
-         }
+         console.log(event.target.value)
          this.lineId = parseInt(event.target.value);
          this.showBus = true;
          this.locationService.requestBusLocation(this.lineId.toString());
          this.getLineRoute();
-         console.log(this.lineCoords);
          for (let i = 0; i < this.lines.length; i++) {
             if (this.lines[i]['id'] == this.lineId) {
                this.selectedLine = this.lines[i];

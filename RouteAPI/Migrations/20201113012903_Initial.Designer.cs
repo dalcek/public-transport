@@ -10,8 +10,8 @@ using RouteAPI.Data;
 namespace RouteAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201108100638_AnotherLine")]
-    partial class AnotherLine
+    [Migration("20201113012903_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -239,6 +239,153 @@ namespace RouteAPI.Migrations
                             LineId = 2,
                             XCoordinate = 45.237127000000001,
                             YCoordinate = 19.826509999999999
+                        },
+                        new
+                        {
+                            Id = 29,
+                            LineId = 3,
+                            XCoordinate = 45.253379000000002,
+                            YCoordinate = 19.844736000000001
+                        },
+                        new
+                        {
+                            Id = 30,
+                            LineId = 3,
+                            XCoordinate = 45.253556000000003,
+                            YCoordinate = 19.846695
+                        },
+                        new
+                        {
+                            Id = 31,
+                            LineId = 3,
+                            XCoordinate = 45.253754999999998,
+                            YCoordinate = 19.848721999999999
+                        },
+                        new
+                        {
+                            Id = 32,
+                            LineId = 3,
+                            XCoordinate = 45.253852999999999,
+                            YCoordinate = 19.849674
+                        },
+                        new
+                        {
+                            Id = 33,
+                            LineId = 3,
+                            XCoordinate = 45.253998000000003,
+                            YCoordinate = 19.851122
+                        },
+                        new
+                        {
+                            Id = 34,
+                            LineId = 3,
+                            XCoordinate = 45.254218000000002,
+                            YCoordinate = 19.853408999999999
+                        },
+                        new
+                        {
+                            Id = 35,
+                            LineId = 3,
+                            XCoordinate = 45.254398999999999,
+                            YCoordinate = 19.855025999999999
+                        },
+                        new
+                        {
+                            Id = 36,
+                            LineId = 3,
+                            XCoordinate = 45.254601000000001,
+                            YCoordinate = 19.857119999999998
+                        },
+                        new
+                        {
+                            Id = 37,
+                            LineId = 3,
+                            XCoordinate = 45.254823000000002,
+                            YCoordinate = 19.859414999999998
+                        },
+                        new
+                        {
+                            Id = 38,
+                            LineId = 3,
+                            XCoordinate = 45.254883999999997,
+                            YCoordinate = 19.860910000000001
+                        },
+                        new
+                        {
+                            Id = 39,
+                            LineId = 3,
+                            XCoordinate = 45.254584999999999,
+                            YCoordinate = 19.863603999999999
+                        },
+                        new
+                        {
+                            Id = 40,
+                            LineId = 3,
+                            XCoordinate = 45.253836999999997,
+                            YCoordinate = 19.865122
+                        },
+                        new
+                        {
+                            Id = 41,
+                            LineId = 3,
+                            XCoordinate = 45.252794999999999,
+                            YCoordinate = 19.866892
+                        },
+                        new
+                        {
+                            Id = 42,
+                            LineId = 3,
+                            XCoordinate = 45.252491999999997,
+                            YCoordinate = 19.868995000000002
+                        },
+                        new
+                        {
+                            Id = 43,
+                            LineId = 3,
+                            XCoordinate = 45.252301000000003,
+                            YCoordinate = 19.871711000000001
+                        },
+                        new
+                        {
+                            Id = 44,
+                            LineId = 3,
+                            XCoordinate = 45.250781000000003,
+                            YCoordinate = 19.873906999999999
+                        },
+                        new
+                        {
+                            Id = 45,
+                            LineId = 3,
+                            XCoordinate = 45.248609000000002,
+                            YCoordinate = 19.876946
+                        },
+                        new
+                        {
+                            Id = 46,
+                            LineId = 3,
+                            XCoordinate = 45.250326999999999,
+                            YCoordinate = 19.876978000000001
+                        },
+                        new
+                        {
+                            Id = 47,
+                            LineId = 3,
+                            XCoordinate = 45.252735000000001,
+                            YCoordinate = 19.876224000000001
+                        },
+                        new
+                        {
+                            Id = 48,
+                            LineId = 3,
+                            XCoordinate = 45.253048,
+                            YCoordinate = 19.878081999999999
+                        },
+                        new
+                        {
+                            Id = 49,
+                            LineId = 3,
+                            XCoordinate = 45.253602999999998,
+                            YCoordinate = 19.881439
                         });
                 });
 
@@ -279,6 +426,78 @@ namespace RouteAPI.Migrations
                             Id = 3,
                             Time = new DateTime(2020, 10, 23, 10, 45, 0, 0, DateTimeKind.Unspecified),
                             TimetableId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Time = new DateTime(2020, 10, 23, 8, 45, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Time = new DateTime(2020, 10, 23, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Time = new DateTime(2020, 10, 23, 8, 45, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Time = new DateTime(2020, 10, 23, 9, 10, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Time = new DateTime(2020, 10, 23, 10, 23, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 4
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Time = new DateTime(2020, 10, 23, 12, 45, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 4
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Time = new DateTime(2020, 10, 23, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 4
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Time = new DateTime(2020, 10, 23, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 5
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Time = new DateTime(2020, 10, 23, 10, 20, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 5
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Time = new DateTime(2020, 10, 23, 14, 45, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 5
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Time = new DateTime(2020, 10, 23, 20, 37, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 5
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Time = new DateTime(2020, 10, 23, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            TimetableId = 6
                         });
                 });
 
@@ -311,6 +530,12 @@ namespace RouteAPI.Migrations
                             Id = 2,
                             Name = "3",
                             Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "9",
+                            Type = 2
                         });
                 });
 
@@ -343,6 +568,36 @@ namespace RouteAPI.Migrations
                         {
                             LineId = 1,
                             StationId = 3
+                        },
+                        new
+                        {
+                            LineId = 2,
+                            StationId = 4
+                        },
+                        new
+                        {
+                            LineId = 2,
+                            StationId = 5
+                        },
+                        new
+                        {
+                            LineId = 2,
+                            StationId = 6
+                        },
+                        new
+                        {
+                            LineId = 3,
+                            StationId = 8
+                        },
+                        new
+                        {
+                            LineId = 3,
+                            StationId = 9
+                        },
+                        new
+                        {
+                            LineId = 3,
+                            StationId = 10
                         });
                 });
 
@@ -393,6 +648,62 @@ namespace RouteAPI.Migrations
                             Name = "Centar",
                             XCoordinate = 45.254818999999998,
                             YCoordinate = 19.841785000000002
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Address = "Futoska",
+                            Name = "Futoski park",
+                            XCoordinate = 45.249302,
+                            YCoordinate = 19.828547
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Address = "Cara Dusana",
+                            Name = "Medicinska skola",
+                            XCoordinate = 45.243614999999998,
+                            YCoordinate = 19.825137000000002
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Address = "Bulevar oslobodjenja",
+                            Name = "NIS",
+                            XCoordinate = 45.242125000000001,
+                            YCoordinate = 19.842656000000002
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Address = "Bul. oslobodjenja",
+                            Name = "Limanski park",
+                            XCoordinate = 45.241152999999997,
+                            YCoordinate = 19.842749000000001
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Address = "Bul. Mihajla Pupina",
+                            Name = "Dunavski park",
+                            XCoordinate = 45.254052000000001,
+                            YCoordinate = 19.85239
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Address = "Beogradska",
+                            Name = "Kapija",
+                            XCoordinate = 45.254618999999998,
+                            YCoordinate = 19.862797
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Address = "Reljkoviceva",
+                            Name = "Petrovaradin",
+                            XCoordinate = 45.251885000000001,
+                            YCoordinate = 19.876567999999999
                         });
                 });
 
@@ -433,6 +744,51 @@ namespace RouteAPI.Migrations
                             From = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LineId = 1,
                             To = new DateTime(2020, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            DayType = 2,
+                            From = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LineId = 1,
+                            To = new DateTime(2020, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Active = true,
+                            DayType = 1,
+                            From = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LineId = 2,
+                            To = new DateTime(2020, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Active = true,
+                            DayType = 2,
+                            From = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LineId = 2,
+                            To = new DateTime(2020, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Active = true,
+                            DayType = 1,
+                            From = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LineId = 3,
+                            To = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Active = true,
+                            DayType = 2,
+                            From = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LineId = 3,
+                            To = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 

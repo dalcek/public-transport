@@ -71,7 +71,9 @@ export class AdminLinesComponent implements OnInit {
       this.routeService.editLine(new LineDTO(this.lineId, this.lineForm.controls.name.value,
          this.lineForm.controls.type.value, this.lineStationIds)).subscribe(
          result => {
+            console.log(result)
             this.lines = result.data;
+            window.alert('Line edited successful')
          },
          err => {
             console.log(err.error.message);

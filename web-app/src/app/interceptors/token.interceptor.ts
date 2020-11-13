@@ -5,18 +5,17 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor{
-    //constructor (public auth: AuthenticationService){}  Ovako je bilo a ne prazan konstruktor, nzm cemu sluzi authservice ovde ako se nigde ne poziva
-    constructor (){}
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let jwt = localStorage.jwt;
-        console.log(req);
-        if(jwt){
-            req = req.clone({
-                setHeaders: {
-                    "Authorization": "Bearer "+jwt
-                }
-            });
-        }
-        return next.handle(req);
-    }
+   constructor (){}
+   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+      let jwt = localStorage.jwt;
+      console.log(req);
+      if(jwt){
+         req = req.clone({
+            setHeaders: {
+               "Authorization": "Bearer "+ jwt
+            }
+         });
+      }
+      return next.handle(req);
+   }
 }

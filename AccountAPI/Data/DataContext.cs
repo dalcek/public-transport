@@ -33,6 +33,7 @@ namespace AccountAPI.Data
                     LastName = "Doe",
                     DateOfBirth = new DateTime(1990, 4, 1),
                     UserStatus = Enums.UserStatus.Accepted,
+                    UserType = Enums.UserType.RegularUser,
                     Role = "Admin",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt
@@ -50,6 +51,7 @@ namespace AccountAPI.Data
                     LastName = "Doe",
                     DateOfBirth = new DateTime(1993, 7, 23),
                     UserStatus = Enums.UserStatus.Accepted,
+                    UserType = Enums.UserType.RegularUser,
                     Role = "Controller",
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt

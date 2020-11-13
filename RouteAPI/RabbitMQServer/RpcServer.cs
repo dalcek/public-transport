@@ -44,7 +44,6 @@ namespace RouteAPI.RabbitMQServer
             {
                var message = Encoding.UTF8.GetString(body);
                Console.WriteLine(message);
-               //string res = "caos rabbit";
                var tmp = _routeService.GetCoordinates();
                response = JsonSerializer.Serialize(tmp);
                Console.WriteLine(tmp);
@@ -52,7 +51,6 @@ namespace RouteAPI.RabbitMQServer
             catch (Exception e)
             {
                Console.WriteLine("***********Error at RPC Server: " + e.Message);
-               //response = "";
             }
             finally
             {

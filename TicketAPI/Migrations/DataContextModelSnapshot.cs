@@ -225,6 +225,15 @@ namespace TicketAPI.Migrations
                             PricelistItemId = 2,
                             UserId = 3,
                             Valid = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IssueTime = new DateTime(2020, 11, 12, 10, 13, 0, 0, DateTimeKind.Unspecified),
+                            Price = 10000.0,
+                            PricelistItemId = 4,
+                            UserId = 3,
+                            Valid = true
                         });
                 });
 

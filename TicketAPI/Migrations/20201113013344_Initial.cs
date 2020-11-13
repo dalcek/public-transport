@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TicketAPI.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -145,6 +145,11 @@ namespace TicketAPI.Migrations
                 table: "Tickets",
                 columns: new[] { "Id", "IssueTime", "Price", "PricelistItemId", "UserId", "Valid" },
                 values: new object[] { 2, new DateTime(2020, 6, 5, 16, 13, 56, 0, DateTimeKind.Unspecified), 250.0, 2, 3, true });
+
+            migrationBuilder.InsertData(
+                table: "Tickets",
+                columns: new[] { "Id", "IssueTime", "Price", "PricelistItemId", "UserId", "Valid" },
+                values: new object[] { 3, new DateTime(2020, 11, 12, 10, 13, 0, 0, DateTimeKind.Unspecified), 10000.0, 4, 3, true });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PricelistItems_ItemId",

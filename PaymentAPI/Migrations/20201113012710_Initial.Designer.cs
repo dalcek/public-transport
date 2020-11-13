@@ -9,8 +9,8 @@ using PaymentAPI.Data;
 namespace PaymentAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201019133722_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20201113012710_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
